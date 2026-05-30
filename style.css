@@ -311,6 +311,76 @@ section:nth-child(even) {
   gap: 20px;
 }
 
+.project-image {
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.project-image img {
+  transition: transform .5s ease;
+}
+
+.project-image:hover img {
+  transform: scale(1.05);
+}
+
+.featured-projects {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-bottom: 70px;
+}
+
+.featured-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px;
+  transition: all 0.3s ease;
+}
+
+.featured-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+}
+
+.project-tag {
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.project-content h3 {
+  font-size: 1.6rem;
+  margin: 10px 0 16px;
+}
+
+.project-content p {
+  color: var(--muted);
+  max-width: 700px;
+  margin-bottom: 18px;
+}
+
+.project-links {
+  margin-top: 20px;
+}
+
+.project-links a {
+  text-decoration: none;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.project-links a:hover {
+  text-decoration: underline;
+}
+
+.other-projects-title {
+  margin-bottom: 2rem;
+}
+
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -416,6 +486,24 @@ section:nth-child(even) {
   font-weight: 600;
   padding-top: 4px;
   text-align: right;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+  radial-gradient(
+    circle at 20% 20%,
+    rgba(107,63,160,.08),
+    transparent 40%
+  ),
+  radial-gradient(
+    circle at 80% 80%,
+    rgba(107,63,160,.06),
+    transparent 40%
+  );
 }
 
 .tl-body {
@@ -586,5 +674,20 @@ footer {
 
   .cards {
     grid-template-columns: 1fr;
+  }
+
+  .card,
+  .featured-card,
+  .cert-item {
+    transition:
+      transform .35s ease,
+      box-shadow .35s ease;
+  }
+
+  .card:hover,
+  .featured-card:hover,
+  .cert-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 60px rgba(0,0,0,.12);
   }
 }
