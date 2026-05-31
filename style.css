@@ -528,6 +528,47 @@ body::before {
   max-width: 700px;
 }
 
+.cert-header {
+  width: 100%;
+  border: none;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  text-align: left;
+}
+
+.cert-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .3s ease;
+  margin-left: 60px;
+}
+
+.cert-item.active .cert-content {
+  max-height: 200px;
+  margin-top: 12px;
+}
+
+.cert-arrow {
+  font-size: 1.4rem;
+  color: var(--accent);
+  transition: transform .3s ease;
+}
+
+.cert-item.active .cert-arrow {
+  transform: rotate(45deg);
+}
+
+.cert-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
 .cert-item {
   display: flex;
   align-items: flex-start;

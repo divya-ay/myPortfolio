@@ -250,37 +250,77 @@
   <p class="section-label">/ certificates</p>
   <div class="cert-list">
 
-    <div class="cert-item">
+  <div class="cert-item">
+    <button class="cert-header">
       <div class="cert-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+        ...
       </div>
+
       <div>
         <h3>CCNA: Introduction to Networks</h3>
-        <p>Cisco Networking Academy · 2025/26</p>
       </div>
-    </div>
 
-    <div class="cert-item">
-      <div class="cert-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
-      </div>
-      <div>
-        <h3>Introduction to Cybersecurity</h3>
-        <p>Cisco Networking Academy </p>
-      </div>
-    </div>
+      <span class="cert-arrow">+</span>
+    </button>
 
-    <div class="cert-item">
-      <div class="cert-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      </div>
-      <div>
-        <h3>MathE Project Collaboration</h3>
-        <p>Improve Math Skills in Higher Education</p>
-      </div>
-    </div>
+    <div class="cert-content">
+      <p>Cisco Networking Academy · 2025/26</p>
 
+      <a href="certificates/itn.pdf"
+        target="_blank"
+        class="cert-link">
+        View Certificate
+      </a>
+    </div>
   </div>
+
+  <div class="cert-item">
+    <button class="cert-header">
+      <div class="cert-icon">
+        ...
+      </div>
+
+      <div>
+        <h3>CCNA: Introduction to Cybersecurity</h3>
+      </div>
+
+      <span class="cert-arrow">+</span>
+    </button>
+
+    <div class="cert-content">
+      <p>Cisco Networking Academy · 2025/26</p>
+
+      <a href="certificates/Introduction_to_Cybersecurity.pdf"
+        target="_blank"
+        class="cert-link">
+        View Certificate
+      </a>
+    </div>
+  </div>
+
+  <div class="cert-item">
+  <button class="cert-header">
+    <div class="cert-icon">
+      ...
+    </div>
+
+    <div>
+      <h3>MathE Project Collaboration</h3>
+    </div>
+
+    <span class="cert-arrow">+</span>
+  </button>
+
+  <div class="cert-content">
+    <p>Cisco Networking Academy · 2025/26</p>
+
+    <a href="certificates/MathE.jpg"
+       target="_blank"
+       class="cert-link">
+       View Certificate
+    </a>
+  </div>
+</div>
 </section>
 
 <section id="contact" class="contact-section reveal">
@@ -324,6 +364,12 @@
     links.classList.remove('open');
     toggle.classList.remove('active');
   }));
+  
+  document.querySelectorAll('.cert-header').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.parentElement.classList.toggle('active');
+    });
+  });
 </script>
 
 </body>
