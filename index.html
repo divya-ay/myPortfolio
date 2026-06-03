@@ -315,7 +315,7 @@
   <p>Designed &amp; built by Divya Shrestha &nbsp;·&nbsp; © 2026</p>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.12.313/pdf.min.js" integrity="sha512-5zQRPBSiustq2UXUarhPJApVafYVUPrazvfMLf/cELGrk4IuG2I4x82f3AwY311rENJdrbg4eAAg8Jb5QnYIaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
@@ -343,7 +343,7 @@
 
   const pdfjsAvailable = typeof window.pdfjsLib !== 'undefined';
   if (pdfjsAvailable) {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.12.313/pdf.worker.min.js';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
   }
 
   async function renderPdf(src) {
