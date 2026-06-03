@@ -248,82 +248,49 @@
 
 <section id="certificates" class="reveal">
   <p class="section-label">/ certificates</p>
-  <div class="cert-list">
-
-  <div class="cert-item">
-    <button class="cert-header">
-      <div class="cert-icon">
-        ...
-      </div>
-
+  <div class="cert-grid">
+    <button class="cert-card" data-title="CCNA: Introduction to Networks" data-subtitle="Cisco Networking Academy · 2025/26" data-type="pdf" data-src="certificates/itn.pdf">
       <div>
+        <span class="cert-card-label">Certificate</span>
         <h3>CCNA: Introduction to Networks</h3>
+        <p>Cisco Networking Academy · 2025/26</p>
       </div>
-
-      <span class="cert-arrow">+</span>
+      <span class="cert-card-action">View</span>
     </button>
 
-    <div class="cert-content">
-      <p>Cisco Networking Academy · 2025/26</p>
-
-      <div class="cert-preview">
-        <iframe
-          src="certificates/itn.pdf"
-          title="CCNA Introduction to Networks Certificate">
-        </iframe>
-      </div>
-    </div>
-  </div>
-
-  <div class="cert-item">
-    <button class="cert-header">
-      <div class="cert-icon">
-        ...
-      </div>
-
+    <button class="cert-card" data-title="CCNA: Introduction to Cybersecurity" data-subtitle="Cisco Networking Academy · 2025/26" data-type="pdf" data-src="certificates/Introduction_to_Cybersecurity_certificate.pdf">
       <div>
+        <span class="cert-card-label">Certificate</span>
         <h3>CCNA: Introduction to Cybersecurity</h3>
+        <p>Cisco Networking Academy · 2025/26</p>
       </div>
-
-      <span class="cert-arrow">+</span>
+      <span class="cert-card-action">View</span>
     </button>
 
-    <div class="cert-content">
-      <p>Cisco Networking Academy · 2025/26</p>
-
-      <div class="cert-preview">
-        <iframe
-          src="certificates/Introduction_to_Cybersecurity.pdf"
-          title="Introduction to Cybersecurity Certificate">
-        </iframe>
+    <button class="cert-card" data-title="MathE Project Collaboration" data-subtitle="MathE Project Collaboration · 2025" data-type="image" data-src="certificates/MathE.jpg">
+      <div>
+        <span class="cert-card-label">Certificate</span>
+        <h3>MathE Project Collaboration</h3>
+        <p>MathE Project Collaboration · 2025</p>
       </div>
-    </div>
+      <span class="cert-card-action">View</span>
+    </button>
   </div>
-
-  <div class="cert-item">
-  <button class="cert-header">
-    <div class="cert-icon">
-      ...
-    </div>
-
-    <div>
-      <h3>MathE Project Collaboration</h3>
-    </div>
-
-    <span class="cert-arrow">+</span>
-  </button>
-
-    <div class="cert-content">
-      <p>MathE Project Collaboration · 2025</p>
-
-      <div class="cert-preview">
-        <img
-          src="certificates/MathE.jpg"
-          alt="MathE Certificate">
-      </div>
-    </div>
-</div>
 </section>
+
+<div class="modal-overlay" id="certModal" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-header">
+      <div>
+        <p class="modal-label">Certificate Preview</p>
+        <h3 id="modalTitle">Title</h3>
+        <p class="modal-subtitle" id="modalSubtitle">Issuer</p>
+      </div>
+      <button class="modal-close" aria-label="Close certificate preview">×</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
 
 <section id="contact" class="contact-section reveal">
   <p class="section-label">/ contact</p>
@@ -348,6 +315,7 @@
   <p>Designed &amp; built by Divya Shrestha &nbsp;·&nbsp; © 2026</p>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.12.313/pdf.min.js" integrity="sha512-5zQRPBSiustq2UXUarhPJApVafYVUPrazvfMLf/cELGrk4IuG2I4x82f3AwY311rENJdrbg4eAAg8Jb5QnYIaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
@@ -367,10 +335,84 @@
     toggle.classList.remove('active');
   }));
   
-  document.querySelectorAll('.cert-header').forEach(btn => {
-    btn.addEventListener('click', () => {
-      btn.parentElement.classList.toggle('active');
+  const certModal = document.getElementById('certModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalSubtitle = document.getElementById('modalSubtitle');
+  const modalBody = document.getElementById('modalBody');
+  const modalClose = certModal.querySelector('.modal-close');
+
+  const pdfjsAvailable = typeof window.pdfjsLib !== 'undefined';
+  if (pdfjsAvailable) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.12.313/pdf.worker.min.js';
+  }
+
+  async function renderPdf(src) {
+    if (!pdfjsAvailable) {
+      throw new Error('PDF.js library not available');
+    }
+
+    const response = await fetch(src);
+    if (!response.ok) throw new Error('Failed to load certificate');
+    const arrayBuffer = await response.arrayBuffer();
+    const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+    const pdf = await loadingTask.promise;
+    const page = await pdf.getPage(1);
+    const viewport = page.getViewport({ scale: 1.4 });
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    await page.render({ canvasContext: context, viewport }).promise;
+    return canvas;
+  }
+
+  document.querySelectorAll('.cert-card').forEach(card => {
+    card.addEventListener('click', async () => {
+      const title = card.dataset.title;
+      const subtitle = card.dataset.subtitle;
+      const type = card.dataset.type;
+      const src = card.dataset.src;
+
+      modalTitle.textContent = title;
+      modalSubtitle.textContent = subtitle;
+      modalBody.innerHTML = '';
+
+      if (type === 'pdf') {
+        if (!pdfjsAvailable) {
+          modalBody.innerHTML = `<div class="pdf-fallback"><p>PDF preview library failed to load. <a href="${src}" target="_blank" rel="noopener">Open the certificate in a new tab</a>.</p></div>`;
+        } else {
+          try {
+            const canvas = await renderPdf(src);
+            modalBody.appendChild(canvas);
+          } catch (error) {
+            modalBody.innerHTML = `<div class="pdf-fallback"><p>Unable to preview this PDF inline. <a href="${src}" target="_blank" rel="noopener">Open the certificate in a new tab</a>.</p></div>`;
+            console.error('PDF preview error:', error);
+          }
+        }
+      } else {
+        modalBody.innerHTML = `<img src="${src}" alt="${title} certificate"/>`;
+      }
+
+      certModal.classList.add('open');
+      certModal.setAttribute('aria-hidden', 'false');
     });
+  });
+
+  const closeModal = () => {
+    certModal.classList.remove('open');
+    certModal.setAttribute('aria-hidden', 'true');
+    modalBody.innerHTML = '';
+  };
+
+  modalClose.addEventListener('click', closeModal);
+  certModal.addEventListener('click', e => {
+    if (e.target === certModal) closeModal();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && certModal.classList.contains('open')) {
+      closeModal();
+    }
   });
 </script>
 
