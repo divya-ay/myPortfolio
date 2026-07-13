@@ -112,6 +112,9 @@ nav {
   text-decoration: none;
   transition: all 0.2s ease;
   white-space: nowrap;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 .btn-primary {
@@ -362,45 +365,6 @@ section:nth-child(even) {
 
 .meta-links-box a:hover { color: var(--accent); }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
-  gap: 20px;
-}
-
-.project-image {
-  overflow: hidden;
-  border-radius: 14px;
-}
-
-.project-image img {
-  transition: transform .5s ease;
-}
-
-.project-image:hover img {
-  transform: scale(1.05);
-}
-
-.featured-projects {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  margin-bottom: 70px;
-}
-
-.featured-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 36px;
-  transition: all 0.3s ease;
-}
-
-.featured-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.18);
-}
-
 .compact-summary {
   max-width: 760px;
   padding: 28px 30px;
@@ -439,124 +403,102 @@ section:nth-child(even) {
   margin: 0;
 }
 
-.project-layout {
+/* ── PROJECTS · Netflix-style poster grid ────── */
+.poster-grid {
   display: grid;
-  grid-template-columns: 1.1fr 0.8fr;
-  gap: 22px;
-  align-items: start;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 20px;
 }
 
-.mini-projects {
-  display: grid;
-  gap: 16px;
-}
-
-.compact-card {
-  padding: 22px;
-}
-
-.project-tag {
-  color: var(--accent);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.project-content h3 {
-  font-size: 1.6rem;
-  margin: 10px 0 16px;
-}
-
-.project-content p {
-  color: var(--muted);
-  max-width: 700px;
-  margin-bottom: 18px;
-}
-
-.project-links {
-  margin-top: 20px;
-}
-
-.project-links a {
-  text-decoration: none;
-  color: var(--accent);
-  font-weight: 600;
-}
-
-.project-links a:hover {
-  text-decoration: underline;
-}
-
-.other-projects-title {
-  margin-bottom: 2rem;
-}
-
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 28px;
+.poster-card {
   position: relative;
+  aspect-ratio: 2 / 3;
+  border-radius: 14px;
+  border: 1px solid var(--border);
   overflow: hidden;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+  background: var(--surface);
+  padding: 0;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s;
 }
 
-.card::after {
-  content: '';
+.poster-card:hover,
+.poster-card:focus-visible {
+  transform: scale(1.06);
+  box-shadow: 0 24px 50px rgba(0,0,0,0.45);
+  z-index: 5;
+  outline: none;
+}
+
+.poster-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.poster-art {
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 38px rgba(0,0,0,0.16);
-}
-
-.card:hover::after { transform: scaleX(1); }
-
-.card-num {
+.poster-mark {
   font-family: 'DM Serif Display', serif;
   font-size: 2.6rem;
-  color: var(--accent-l);
-  line-height: 1;
-  display: block;
-  margin-bottom: 10px;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.02em;
 }
 
-.card h3 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 10px;
+.poster-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(4,9,18,0.92) 0%, rgba(4,9,18,0.35) 42%, transparent 68%);
 }
 
-.card p {
-  color: var(--muted);
-  font-size: 0.9rem;
-  margin-bottom: 18px;
-  line-height: 1.6;
+.poster-label {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 16px 14px;
 }
 
-.card-tech {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.card-tech span {
-  font-size: 0.72rem;
-  font-weight: 500;
-  padding: 3px 10px;
+.poster-featured {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #07111f;
+  background: var(--accent);
+  padding: 3px 8px;
   border-radius: 100px;
-  background: var(--accent-l);
-  color: var(--accent);
+  margin-bottom: 8px;
 }
 
+.poster-label h3 {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.3;
+}
+
+.poster-sub {
+  display: block;
+  font-size: 0.76rem;
+  color: rgba(255,255,255,0.65);
+  margin-top: 2px;
+}
+
+.poster-1 .poster-art { background: linear-gradient(155deg, #123b52 0%, #0a1a2e 60%, #061020 100%); }
+.poster-2 .poster-art { background: linear-gradient(155deg, #2a2154 0%, #17123a 60%, #0a0a1c 100%); }
+.poster-3 .poster-art { background: linear-gradient(155deg, #0f4a3d 0%, #0c2a2a 60%, #06151a 100%); }
+.poster-4 .poster-art { background: linear-gradient(155deg, #5c2a17 0%, #331a14 60%, #170c0c 100%); }
+.poster-5 .poster-art { background: linear-gradient(155deg, #3a1d4a 0%, #221331 60%, #100a1c 100%); }
+
+/* ── TIMELINE (education) ─────────────────────── */
 .timeline {
   max-width: 700px;
   position: relative;
@@ -632,6 +574,7 @@ body::before {
   font-size: 0.9rem;
 }
 
+/* ── CERTIFICATES ──────────────────────────────  */
 .cert-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -689,12 +632,13 @@ body::before {
   white-space: nowrap;
 }
 
+/* ── MODALS (shared overlay, certificate + project) ── */
 .modal-overlay {
   position: fixed;
   inset: 0;
   display: none;
   place-items: center;
-  background: rgba(17, 17, 17, 0.75);
+  background: rgba(3, 7, 14, 0.8);
   z-index: 250;
   padding: 24px;
 }
@@ -709,10 +653,11 @@ body::before {
   background: var(--surface);
   border-radius: 28px;
   padding: 28px;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   overflow: auto;
+  border: 1px solid var(--border);
 }
 
 .modal-header {
@@ -740,10 +685,10 @@ body::before {
 }
 
 .modal-close {
-  background: none;
+  background: rgba(4,9,18,0.6);
   border: none;
   color: var(--text);
-  font-size: 2rem;
+  font-size: 1.6rem;
   line-height: 1;
   cursor: pointer;
   padding: 0;
@@ -796,6 +741,99 @@ body::before {
   text-decoration: underline;
 }
 
+/* ── PROJECT MODAL (Netflix-style detail card) ── */
+.project-modal {
+  padding: 0;
+  border-radius: 22px;
+  width: min(96vw, 780px);
+}
+
+.project-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  backdrop-filter: blur(6px);
+}
+
+.project-modal-banner {
+  position: relative;
+  aspect-ratio: 16 / 8;
+  display: flex;
+  align-items: flex-end;
+  padding: 32px;
+  overflow: hidden;
+}
+
+.project-modal-banner .project-modal-mark {
+  position: absolute;
+  right: 40px;
+  top: 40px;
+  font-family: 'DM Serif Display', serif;
+  font-size: 5rem;
+  color: rgba(255,255,255,0.14);
+  letter-spacing: 0.02em;
+}
+
+.project-modal-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(4,9,18,0.95) 0%, rgba(4,9,18,0.25) 55%, transparent 85%);
+}
+
+.project-modal-banner h3 {
+  position: relative;
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  color: #fff;
+  z-index: 1;
+}
+
+.project-modal-banner.poster-1 { background: linear-gradient(155deg, #123b52 0%, #0a1a2e 60%, #061020 100%); }
+.project-modal-banner.poster-2 { background: linear-gradient(155deg, #2a2154 0%, #17123a 60%, #0a0a1c 100%); }
+.project-modal-banner.poster-3 { background: linear-gradient(155deg, #0f4a3d 0%, #0c2a2a 60%, #06151a 100%); }
+.project-modal-banner.poster-4 { background: linear-gradient(155deg, #5c2a17 0%, #331a14 60%, #170c0c 100%); }
+.project-modal-banner.poster-5 { background: linear-gradient(155deg, #3a1d4a 0%, #221331 60%, #100a1c 100%); }
+
+.project-modal-body {
+  padding: 28px 32px 34px;
+}
+
+.project-modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.project-tag-pill {
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 5px 13px;
+  border-radius: 100px;
+  background: var(--accent-l);
+  color: var(--accent);
+  border: 1px solid rgba(125,211,252,0.25);
+}
+
+.project-modal-desc {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.75;
+  margin-bottom: 26px;
+  max-width: 620px;
+}
+
+.project-modal-github {
+  display: inline-flex;
+}
+
 @media (max-width: 760px) {
   .cert-grid {
     grid-template-columns: 1fr;
@@ -817,6 +855,20 @@ body::before {
 
   .modal-body {
     min-height: 320px;
+  }
+
+  .poster-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 12px;
+  }
+
+  .project-modal-banner {
+    aspect-ratio: 16 / 10;
+    padding: 22px;
+  }
+
+  .project-modal-body {
+    padding: 22px 22px 28px;
   }
 }
 
@@ -925,26 +977,7 @@ footer {
   .nav-toggle.active span:nth-child(2) { opacity: 0; }
   .nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-  .cards {
-    grid-template-columns: 1fr;
-  }
-
   .compact-summary {
     padding: 24px;
-  }
-
-  .card,
-  .featured-card,
-  .cert-item {
-    transition:
-      transform .35s ease,
-      box-shadow .35s ease;
-  }
-
-  .card:hover,
-  .featured-card:hover,
-  .cert-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 25px 60px rgba(0,0,0,.12);
   }
 }
