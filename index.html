@@ -4,19 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Divya Shrestha</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
 <nav>
-  <a href="#home" class="nav-brand">Divya Shrestha</a>
+  <a href="#home" class="nav-brand"><span class="nav-brand-path">~/</span>divya-shrestha</a>
   <div class="nav-links">
-    <a href="#about">about</a>
-    <a href="#projects">projects</a>
-    <a href="#education">education</a>
-    <a href="#certificates">certificates</a>
-    <a href="#contact">contact</a>
+    <a href="#about"><span class="nav-index">01</span>about</a>
+    <a href="#projects"><span class="nav-index">02</span>projects</a>
+    <a href="#education"><span class="nav-index">03</span>education</a>
+    <a href="#certificates"><span class="nav-index">04</span>certificates</a>
+    <a href="#contact"><span class="nav-index">05</span>contact</a>
   </div>
   <button class="nav-toggle" id="navToggle" aria-label="menu">
     <span></span><span></span><span></span>
@@ -26,8 +28,8 @@
 <section id="home" class="hero reveal">
 
   <div class="hero-text">
-    <p class="kicker">Informatics Engineering Graduate · Portugal</p>
-    <h1>Hello, I'm <em>Divya.</em></h1>
+    <p class="kicker">// informatics engineering graduate · portugal</p>
+    <h1>Hello, I'm <em>Divya</em><span class="cursor">.</span></h1>
     <p class="lead">
       I recently graduated in Informatics Engineering and have been building small projects that helped me learn web development, user interfaces, and practical problem solving.
     </p>
@@ -75,7 +77,7 @@
 </section>
 
 <section id="about" class="reveal">
-  <p class="section-label">/ about me</p>
+  <p class="section-label">// about</p>
   <div class="about-grid">
     <div class="about-text">
       <p>
@@ -132,7 +134,7 @@
 </section>
 
 <section id="projects" class="reveal">
-  <p class="section-label">/ projects</p>
+  <p class="section-label">// projects</p>
   <div class="projects-intro">
     <div>
       <h2 class="section-title">Selected work</h2>
@@ -259,7 +261,7 @@
 </div>
 
 <section id="education" class="reveal">
-  <p class="section-label">/ education</p>
+  <p class="section-label">// education</p>
   <div class="timeline">
 
     <div class="tl-item">
@@ -285,69 +287,103 @@
 </section>
 
 <section id="certificates" class="reveal">
-  <p class="section-label">/ certificates</p>
+  <p class="section-label">// certificates</p>
   <div class="projects-intro cert-intro">
     <div>
       <h2 class="section-title">Learning and development</h2>
-      <p>A few recent certificates that reflect the areas I’ve been exploring and building on so far, especially around web, data, and technology fundamentals.</p>
+      <p>A few recent certificates that reflect the areas I’ve been exploring and building on so far, especially around web, data, and technology fundamentals. Tap a certificate to preview it.</p>
     </div>
   </div>
-  <div class="cert-grid">
-    <button class="cert-card" data-title="CCNA: Introduction to Networks" data-subtitle="Cisco Networking Academy · 2025/26" data-type="pdf" data-src="certificates/itn.pdf">
-      <div>
-        <span class="cert-card-label">Certificate</span>
-        <h3>CCNA: Introduction to Networks</h3>
-        <p>Cisco Networking Academy · 2025/26</p>
+
+  <div class="poster-grid cert-poster-grid">
+
+    <button class="poster-card cert-card cert-1"
+      data-title="CCNA: Introduction to Networks"
+      data-subtitle="Cisco Networking Academy · 2025/26"
+      data-tags="Networking,CCNA"
+      data-type="pdf"
+      data-src="certificates/itn.pdf">
+      <div class="poster-art">
+        <span class="poster-mark">N</span>
       </div>
-      <span class="cert-card-action">View</span>
+      <div class="poster-shade"></div>
+      <div class="poster-label">
+        <h3>Introduction to Networks</h3>
+        <span class="poster-sub">Cisco Networking Academy</span>
+      </div>
     </button>
 
-    <button class="cert-card" data-title="CCNA: Introduction to Cybersecurity" data-subtitle="Cisco Networking Academy · 2025/26" data-type="pdf" data-src="certificates/Introduction_to_Cybersecurity_certificate.pdf">
-      <div>
-        <span class="cert-card-label">Certificate</span>
-        <h3>CCNA: Introduction to Cybersecurity</h3>
-        <p>Cisco Networking Academy · 2025/26</p>
+    <button class="poster-card cert-card cert-2"
+      data-title="CCNA: Introduction to Cybersecurity"
+      data-subtitle="Cisco Networking Academy · 2025/26"
+      data-tags="Security,CCNA"
+      data-type="pdf"
+      data-src="certificates/Introduction_to_Cybersecurity_certificate.pdf">
+      <div class="poster-art">
+        <span class="poster-mark">CS</span>
       </div>
-      <span class="cert-card-action">View</span>
+      <div class="poster-shade"></div>
+      <div class="poster-label">
+        <h3>Introduction to Cybersecurity</h3>
+        <span class="poster-sub">Cisco Networking Academy</span>
+      </div>
     </button>
 
-      <button class="cert-card" data-title="Deloitte: Data Analytics and Job Simulation" data-subtitle="Certificate of completion" data-type="pdf" data-src="certificates/DataAnalyticsJobSimulationDeloitte.pdf">
-        <div>
-        <span class="cert-card-label">Certificate</span>
-        <h3>Deloitte: Data Analytics and Job Simulation</h3>
-        <p>Certificate of completion</p>
+    <button class="poster-card cert-card cert-3"
+      data-title="Deloitte: Data Analytics and Job Simulation"
+      data-subtitle="Certificate of completion"
+      data-tags="Data Analytics,Deloitte"
+      data-type="pdf"
+      data-src="certificates/DataAnalyticsJobSimulationDeloitte.pdf">
+      <div class="poster-art">
+        <span class="poster-mark">DA</span>
       </div>
-      <span class="cert-card-action">View</span>
+      <div class="poster-shade"></div>
+      <div class="poster-label">
+        <h3>Data Analytics Job Simulation</h3>
+        <span class="poster-sub">Deloitte</span>
+      </div>
     </button>
 
-    <button class="cert-card" data-title="MathE Project Collaboration" data-subtitle="MathE Project Collaboration · 2025" data-type="image" data-src="certificates/MathE.jpg">
-      <div>
-        <span class="cert-card-label">Certificate</span>
+    <button class="poster-card cert-card cert-4"
+      data-title="MathE Project Collaboration"
+      data-subtitle="MathE Project Collaboration · 2025"
+      data-tags="Collaboration,MathE"
+      data-type="image"
+      data-src="certificates/MathE.jpg">
+      <div class="poster-art">
+        <span class="poster-mark">ME</span>
+      </div>
+      <div class="poster-shade"></div>
+      <div class="poster-label">
         <h3>MathE Project Collaboration</h3>
-        <p>MathE Project Collaboration · 2025</p>
+        <span class="poster-sub">MathE · 2025</span>
       </div>
-      <span class="cert-card-action">View</span>
     </button>
 
   </div>
 </section>
 
 <div class="modal-overlay" id="certModal" aria-hidden="true">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-header">
-      <div>
-        <p class="modal-label">Certificate Preview</p>
-        <h3 id="modalTitle">Title</h3>
-        <p class="modal-subtitle" id="modalSubtitle">Issuer</p>
-      </div>
-      <button class="modal-close" aria-label="Close certificate preview">×</button>
+  <div class="modal project-modal cert-modal" role="dialog" aria-modal="true" aria-labelledby="certModalTitle">
+    <button class="modal-close project-modal-close" id="certModalClose" aria-label="Close certificate preview">×</button>
+
+    <div class="project-modal-banner" id="certModalBanner">
+      <span class="project-modal-mark" id="certModalMark"></span>
+      <div class="project-modal-fade"></div>
+      <h3 id="certModalTitle">Title</h3>
     </div>
-    <div class="modal-body" id="modalBody"></div>
+
+    <div class="project-modal-body">
+      <div class="project-modal-tags" id="certModalTags"></div>
+      <p class="project-modal-desc" id="certModalSubtitle"></p>
+      <div class="modal-body" id="certModalDocBody"></div>
+    </div>
   </div>
 </div>
 
 <section id="contact" class="contact-section reveal">
-  <p class="section-label">/ contact</p>
+  <p class="section-label">// contact</p>
   <h2 class="section-title">Let's build something together.</h2>
   <p class="contact-sub">
     Interested in junior web development, front-end, and software support roles where I can contribute and grow quickly.
@@ -366,7 +402,7 @@
 </section>
 
 <footer>
-  <p>Designed &amp; built by Divya Shrestha &nbsp;·&nbsp; © 2026</p>
+  <p><span class="footer-prompt">divya@bragança:~$</span> designed &amp; built by Divya Shrestha &nbsp;·&nbsp; © 2026</p>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -389,12 +425,15 @@
     toggle.classList.remove('active');
   }));
 
-  /* ---------- Certificate modal (unchanged) ---------- */
+  /* ---------- Certificate modal (poster-style, shows PDF/image) ---------- */
   const certModal = document.getElementById('certModal');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalSubtitle = document.getElementById('modalSubtitle');
-  const modalBody = document.getElementById('modalBody');
-  const modalClose = certModal.querySelector('.modal-close');
+  const certModalClose = document.getElementById('certModalClose');
+  const certModalBanner = document.getElementById('certModalBanner');
+  const certModalMark = document.getElementById('certModalMark');
+  const certModalTitle = document.getElementById('certModalTitle');
+  const certModalTags = document.getElementById('certModalTags');
+  const certModalSubtitle = document.getElementById('certModalSubtitle');
+  const certModalDocBody = document.getElementById('certModalDocBody');
 
   const pdfjsAvailable = typeof window.pdfjsLib !== 'undefined';
   if (pdfjsAvailable) {
@@ -427,25 +466,39 @@
       const subtitle = card.dataset.subtitle;
       const type = card.dataset.type;
       const src = card.dataset.src;
+      const tags = (card.dataset.tags || '').split(',').map(t => t.trim()).filter(Boolean);
+      const posterClass = [...card.classList].find(c => c.startsWith('cert-') && c !== 'cert-card');
+      const mark = card.querySelector('.poster-mark')?.textContent || '';
 
-      modalTitle.textContent = title;
-      modalSubtitle.textContent = subtitle;
-      modalBody.innerHTML = '';
+      certModalTitle.textContent = title;
+      certModalMark.textContent = mark;
+      certModalBanner.className = 'project-modal-banner ' + posterClass;
+      certModalSubtitle.textContent = subtitle;
+
+      certModalTags.innerHTML = '';
+      tags.forEach(tag => {
+        const span = document.createElement('span');
+        span.className = 'project-tag-pill';
+        span.textContent = tag;
+        certModalTags.appendChild(span);
+      });
+
+      certModalDocBody.innerHTML = '';
 
       if (type === 'pdf') {
         if (!pdfjsAvailable) {
-          modalBody.innerHTML = `<div class="pdf-fallback"><p>PDF preview library failed to load. <a href="${src}" target="_blank" rel="noopener">Open the certificate in a new tab</a>.</p></div>`;
+          certModalDocBody.innerHTML = `<div class="pdf-fallback"><p>PDF preview library failed to load. <a href="${src}" target="_blank" rel="noopener">Open the certificate in a new tab</a>.</p></div>`;
         } else {
           try {
             const canvas = await renderPdf(src);
-            modalBody.appendChild(canvas);
+            certModalDocBody.appendChild(canvas);
           } catch (error) {
-            modalBody.innerHTML = `<div class="pdf-fallback"><p>Unable to preview this PDF inline. <a href="${src}" target="_blank" rel="noopener">Open the certificate in a new tab</a>.</p></div>`;
+            certModalDocBody.innerHTML = `<div class="pdf-fallback"><p>Unable to preview this PDF inline. <a href="${src}" target="_blank" rel="noopener">Open the certificate in a new tab</a>.</p></div>`;
             console.error('PDF preview error:', error);
           }
         }
       } else {
-        modalBody.innerHTML = `<img src="${src}" alt="${title} certificate"/>`;
+        certModalDocBody.innerHTML = `<img src="${src}" alt="${title} certificate"/>`;
       }
 
       certModal.classList.add('open');
@@ -453,15 +506,15 @@
     });
   });
 
-  const closeModal = () => {
+  const closeCertModal = () => {
     certModal.classList.remove('open');
     certModal.setAttribute('aria-hidden', 'true');
-    modalBody.innerHTML = '';
+    certModalDocBody.innerHTML = '';
   };
 
-  modalClose.addEventListener('click', closeModal);
+  certModalClose.addEventListener('click', closeCertModal);
   certModal.addEventListener('click', e => {
-    if (e.target === certModal) closeModal();
+    if (e.target === certModal) closeCertModal();
   });
 
   /* ---------- Project (Netflix-style) modal ---------- */
@@ -474,7 +527,7 @@
   const projectModalDesc = document.getElementById('projectModalDesc');
   const projectModalGithub = document.getElementById('projectModalGithub');
 
-  document.querySelectorAll('.poster-card').forEach(card => {
+  document.querySelectorAll('.poster-card:not(.cert-card)').forEach(card => {
     card.addEventListener('click', () => {
       const title = card.dataset.title;
       const year = card.dataset.year;
@@ -522,7 +575,7 @@
 
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-      if (certModal.classList.contains('open')) closeModal();
+      if (certModal.classList.contains('open')) closeCertModal();
       if (projectModal.classList.contains('open')) closeProjectModal();
     }
   });
