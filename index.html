@@ -6,103 +6,92 @@
   <title>Divya Shrestha</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme');
+      var theme = saved || 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
 </head>
 <body>
 
 <nav>
-  <a href="#home" class="nav-brand"><span class="nav-brand-path">~/</span>divya-shrestha</a>
+  <a href="#home" class="nav-brand">divya<span class="nav-brand-dot">.</span></a>
   <div class="nav-links">
-    <a href="#about"><span class="nav-index">01</span>about</a>
-    <a href="#projects"><span class="nav-index">02</span>projects</a>
-    <a href="#education"><span class="nav-index">03</span>education</a>
-    <a href="#certificates"><span class="nav-index">04</span>certificates</a>
-    <a href="#contact"><span class="nav-index">05</span>contact</a>
+    <a href="#about">about</a>
+    <a href="#projects">work</a>
+    <a href="#education">education</a>
+    <a href="#certificates">certificates</a>
+    <a href="#contact">contact</a>
   </div>
-  <button class="nav-toggle" id="navToggle" aria-label="menu">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle" aria-label="Switch between light and dark mode">
+      <svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2.5 12H5M19 12h2.5M4.2 19.8 6 18M18 6l1.8-1.8"/></svg>
+      <svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5a.6.6 0 0 0-.7-.85 10 10 0 1 0 12.75 12.75.6.6 0 0 0-.85-.7Z"/></svg>
+    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
 <section id="home" class="hero reveal">
+  <canvas id="dotField" class="dot-field" aria-hidden="true"></canvas>
 
-  <div class="hero-text">
-    <p class="kicker">// informatics engineering graduate · portugal</p>
-    <h1>Hello, I'm <em>Divya</em><span class="cursor">.</span></h1>
-    <p class="lead">
-      I recently graduated in Informatics Engineering and have been building small projects that helped me learn web development, user interfaces, and practical problem solving.
-    </p>
-    <p class="lead-secondary">
-      I’m especially interested in junior roles where I can keep learning while contributing steadily in front-end and web-focused work.
-    </p>
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="mailto:divyashrestha1222@gmail.com?subject=Hello Divya!">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="4" width="20" height="16" rx="2"/>
-          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-        </svg>
-        Say hi!
-      </a>
-      <a class="btn btn-ghost" href="https://github.com/divya-ay" target="_blank" rel="noopener">
-        GitHub ↗
-      </a>
-      <a class="btn btn-ghost" href="https://www.linkedin.com/in/divyaa-shrestha" target="_blank" rel="noopener">
-        LinkedIn ↗
-      </a>
-    </div>
-    <div class="focus-strip">
-      <div>
-        <strong>Backend</strong>
-        <span>APIs, databases, logic</span>
+  <div class="hero-inner">
+    <p class="kicker">informatics engineering, class of 2026 — lisbon, portugal</p>
+    <h1 class="hero-name">Divya<br/>Shrestha<span class="cursor">.</span></h1>
+
+    <div class="hero-bottom">
+      <div class="hero-copy">
+        <p class="lead">
+          I just finished a degree in Informatics Engineering, and spent most of it building things instead of only reading about them — an inventory system for a real supplier business, a Kahoot-style quiz app, a bit of machine learning on stock data.
+        </p>
+        <p class="lead-secondary">
+          I like the moment code stops being an exercise and starts being something people actually use. Looking for a junior role — front-end, full-stack, or wherever I can keep learning fast.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="mailto:divyashrestha1222@gmail.com?subject=Hello Divya!">Say hi</a>
+          <a class="btn btn-ghost" href="https://github.com/divya-ay" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/divyaa-shrestha" target="_blank" rel="noopener">LinkedIn ↗</a>
+        </div>
       </div>
-      <div>
-        <strong>Data</strong>
-        <span>analysis and ML basics</span>
-      </div>
-      <div>
-        <strong>Full-stack</strong>
-        <span>web apps and interfaces</span>
+
+      <div class="hero-photo">
+        <div class="photo-frame">
+          <img src="profile.jpg" alt="Photo of Divya Shrestha"/>
+        </div>
       </div>
     </div>
   </div>
-
-  <div class="hero-photo">
-    <div class="photo-ring">
-      <img src="profile.jpg" alt="Photo of Divya Shrestha"/>
-    </div>
-    <div class="photo-blob"></div>
-  </div>
-
 </section>
 
 <section id="about" class="reveal">
-  <p class="section-label">// about</p>
+  <p class="section-label">about</p>
   <div class="about-grid">
     <div class="about-text">
       <p>
-        I recently completed my degree with a solid foundation in software engineering,
-        algorithms, databases, and systems development.
+        My degree gave me the fundamentals — algorithms, databases, systems design — but most of what I actually know came from taking on projects that were a little too big for me and figuring them out anyway.
       </p>
       <p>
-        Most of my experience so far has come from academic work and self-directed projects,
-        where I’ve been learning how to turn ideas into working applications and work through
-        practical implementation challenges.
+        I'm most comfortable in the backend: APIs, data models, the logic that makes an app actually work. But I've spent just as much time on the front-end, because I care whether the thing I built is pleasant to use, not just correct.
       </p>
       <p>
-        I’m especially drawn to web development, interface design, and building experiences
-        that feel clear, usable, and approachable.
+        Originally from Nepal, I moved to Portugal for university, which is also where most of these projects happened.
       </p>
     </div>
     <div class="about-side">
-      <p class="side-label">Current focus</p>
+      <p class="side-label">Working on</p>
       <div class="about-pill-list">
         <span>Backend APIs</span>
         <span>Database design</span>
         <span>System design basics</span>
         <span>Product thinking</span>
       </div>
-      <p class="side-label">Tech I've worked with</p>
+      <p class="side-label">Tools I reach for</p>
       <div class="skills">
         <span>Python</span>
         <span>Java</span>
@@ -123,22 +112,12 @@
   </div>
 </section>
 
-<section class="reveal">
-  <div class="compact-summary">
-    <h2 class="section-title">What I’m building right now</h2>
-    <p>
-      I’m interested in creating clear, usable web experiences and learning through small projects
-      that solve practical problems in a simple, thoughtful way.
-    </p>
-  </div>
-</section>
-
 <section id="projects" class="reveal">
-  <p class="section-label">// projects</p>
+  <p class="section-label">work</p>
   <div class="projects-intro">
     <div>
-      <h2 class="section-title">Selected work</h2>
-      <p>A few projects that reflect the kinds of problems I’ve been exploring so far—mostly around web development, interfaces, and interactive experiences. Tap a project to see more.</p>
+      <h2 class="section-title">A few things I've built</h2>
+      <p>Mostly web apps and interfaces, plus a couple of detours into ML and Java. Tap a project for more.</p>
     </div>
     <a class="btn btn-ghost" href="https://github.com/divya-ay" target="_blank" rel="noopener">View GitHub ↗</a>
   </div>
@@ -153,14 +132,12 @@
       data-tags="Django,Python,PostgreSQL"
       data-desc="A web-based inventory management system built for a real supplier business — Kaligandaki Suppliers. Handles inventory tracking, billing support, product management, and a few practical workflows that make daily operations easier."
       data-github="https://github.com/divya-ay/KaligandakiSuppliers-inventory-Management.git">
-      <div class="poster-art">
-        <span class="poster-mark">KS</span>
-      </div>
+      <div class="poster-art"><span class="poster-mark">KS</span></div>
       <div class="poster-shade"></div>
       <div class="poster-label">
-        <span class="poster-featured">Featured</span>
+        <span class="poster-featured">Real client</span>
         <h3>Kaligandaki Suppliers</h3>
-        <span class="poster-sub">Inventory Management</span>
+        <span class="poster-sub">Inventory management</span>
       </div>
     </button>
 
@@ -170,11 +147,9 @@
       data-year="2025"
       data-type="Web App"
       data-tags="React,Realtime,JavaScript"
-      data-desc="A multiplayer quiz platform inspired by Kahoot, created to explore real-time interaction and user-driven content. Players join live rooms and compete on shared questions as scores update instantly."
+      data-desc="A multiplayer quiz platform inspired by Kahoot, built to explore real-time interaction and user-driven content. Players join live rooms and compete on shared questions as scores update instantly."
       data-github="https://github.com/divya-ay/QuizHub.git">
-      <div class="poster-art">
-        <span class="poster-mark">QH</span>
-      </div>
+      <div class="poster-art"><span class="poster-mark">QH</span></div>
       <div class="poster-shade"></div>
       <div class="poster-label">
         <h3>QuizHub</h3>
@@ -188,11 +163,9 @@
       data-year="2025"
       data-type="Mobile App"
       data-tags="React Native,Node.js,Express,TypeScript"
-      data-desc="A mobile application focused on monitoring and control workflows for water sampling, built with a simple, practical interface so field data stays easy to capture and review."
+      data-desc="A mobile app for monitoring and control workflows in water sampling, built with a simple, practical interface so field data stays easy to capture and review."
       data-github="https://github.com/Bibek2442B/WaterSampler.git">
-      <div class="poster-art">
-        <span class="poster-mark">WS</span>
-      </div>
+      <div class="poster-art"><span class="poster-mark">WS</span></div>
       <div class="poster-shade"></div>
       <div class="poster-label">
         <h3>Water Sampler</h3>
@@ -206,10 +179,8 @@
       data-year="2024"
       data-type="Data / ML"
       data-tags="Python,Pandas,Scikit-Learn"
-      data-desc="A machine learning project comparing Linear Regression and K-Nearest Neighbors models to predict Netflix stock prices from historical data, with an emphasis on data cleaning and model evaluation.">
-      <div class="poster-art">
-        <span class="poster-mark">NS</span>
-      </div>
+      data-desc="A comparison of Linear Regression and K-Nearest Neighbors for predicting Netflix stock prices from historical data, with most of the effort going into data cleaning and honestly evaluating the models rather than chasing a good-looking number.">
+      <div class="poster-art"><span class="poster-mark">NS</span></div>
       <div class="poster-shade"></div>
       <div class="poster-label">
         <h3>Netflix Stock Prediction</h3>
@@ -223,10 +194,8 @@
       data-year="2024"
       data-type="Desktop App"
       data-tags="Java,Algorithms,Data Structures"
-      data-desc="A Java-based diagnostic tool that helps doctors narrow down possible diagnoses, built around custom data structures and algorithms for matching symptoms to conditions.">
-      <div class="poster-art">
-        <span class="poster-mark">PA</span>
-      </div>
+      data-desc="A Java-based diagnostic tool that helps narrow down possible diagnoses, built around custom data structures and algorithms for matching symptoms to conditions.">
+      <div class="poster-art"><span class="poster-mark">PA</span></div>
       <div class="poster-shade"></div>
       <div class="poster-label">
         <h3>Physician Assistant System</h3>
@@ -240,13 +209,11 @@
 <div class="modal-overlay" id="projectModal" aria-hidden="true">
   <div class="modal project-modal" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
     <button class="modal-close project-modal-close" id="projectModalClose" aria-label="Close project preview">×</button>
-
     <div class="project-modal-banner" id="projectModalBanner">
       <span class="project-modal-mark" id="projectModalMark"></span>
       <div class="project-modal-fade"></div>
       <h3 id="projectModalTitle">Title</h3>
     </div>
-
     <div class="project-modal-body">
       <div class="project-modal-tags" id="projectModalTags"></div>
       <p class="project-modal-desc" id="projectModalDesc"></p>
@@ -261,9 +228,8 @@
 </div>
 
 <section id="education" class="reveal">
-  <p class="section-label">// education</p>
+  <p class="section-label">education</p>
   <div class="timeline">
-
     <div class="tl-item">
       <div class="tl-dot"></div>
       <div class="tl-line"></div>
@@ -273,7 +239,6 @@
         <p>Polytechnic Institute of Bragança, Portugal</p>
       </div>
     </div>
-
     <div class="tl-item">
       <div class="tl-dot"></div>
       <span class="tl-year">2019 – 2021</span>
@@ -282,16 +247,15 @@
         <p>Kathmandu Model Secondary School, Nepal</p>
       </div>
     </div>
-
   </div>
 </section>
 
 <section id="certificates" class="reveal">
-  <p class="section-label">// certificates</p>
+  <p class="section-label">certificates</p>
   <div class="projects-intro cert-intro">
     <div>
-      <h2 class="section-title">Learning and development</h2>
-      <p>A few recent certificates that reflect the areas I’ve been exploring and building on so far, especially around web, data, and technology fundamentals. Tap a certificate to preview it.</p>
+      <h2 class="section-title">Learning, on the side</h2>
+      <p>A few certificates from areas I've been exploring alongside my degree — networking, security, and data. Tap one to preview it.</p>
     </div>
   </div>
 
@@ -303,9 +267,7 @@
       data-tags="Networking,CCNA"
       data-type="pdf"
       data-src="certificates/itn.pdf">
-      <div class="poster-art">
-        <span class="poster-mark">N</span>
-      </div>
+      <div class="poster-art"><span class="poster-mark">N</span></div>
       <div class="poster-shade"></div>
       <div class="poster-label">
         <h3>Introduction to Networks</h3>
@@ -319,9 +281,7 @@
       data-tags="Security,CCNA"
       data-type="pdf"
       data-src="certificates/Introduction_to_Cybersecurity_certificate.pdf">
-      <div class="poster-art">
-        <span class="poster-mark">CS</span>
-      </div>
+      <div class="poster-art"><span class="poster-mark">CS</span></div>
       <div class="poster-shade"></div>
       <div class="poster-label">
         <h3>Introduction to Cybersecurity</h3>
@@ -335,9 +295,7 @@
       data-tags="Data Analytics,Deloitte"
       data-type="pdf"
       data-src="certificates/DataAnalyticsJobSimulationDeloitte.pdf">
-      <div class="poster-art">
-        <span class="poster-mark">DA</span>
-      </div>
+      <div class="poster-art"><span class="poster-mark">DA</span></div>
       <div class="poster-shade"></div>
       <div class="poster-label">
         <h3>Data Analytics Job Simulation</h3>
@@ -351,9 +309,7 @@
       data-tags="Collaboration,MathE"
       data-type="image"
       data-src="certificates/MathE.jpg">
-      <div class="poster-art">
-        <span class="poster-mark">ME</span>
-      </div>
+      <div class="poster-art"><span class="poster-mark">ME</span></div>
       <div class="poster-shade"></div>
       <div class="poster-label">
         <h3>MathE Project Collaboration</h3>
@@ -367,13 +323,11 @@
 <div class="modal-overlay" id="certModal" aria-hidden="true">
   <div class="modal project-modal cert-modal" role="dialog" aria-modal="true" aria-labelledby="certModalTitle">
     <button class="modal-close project-modal-close" id="certModalClose" aria-label="Close certificate preview">×</button>
-
     <div class="project-modal-banner" id="certModalBanner">
       <span class="project-modal-mark" id="certModalMark"></span>
       <div class="project-modal-fade"></div>
       <h3 id="certModalTitle">Title</h3>
     </div>
-
     <div class="project-modal-body">
       <div class="project-modal-tags" id="certModalTags"></div>
       <p class="project-modal-desc" id="certModalSubtitle"></p>
@@ -383,18 +337,12 @@
 </div>
 
 <section id="contact" class="contact-section reveal">
-  <p class="section-label">// contact</p>
+  <p class="section-label">contact</p>
   <h2 class="section-title">Let's build something together.</h2>
   <p class="contact-sub">
-    Interested in junior web development, front-end, and software support roles where I can contribute and grow quickly.
+    Open to junior web development, front-end, and software support roles where I can contribute and grow quickly.
   </p>
-  <a class="btn btn-primary btn-lg" href="mailto:divyashrestha1222@gmail.com?subject=Hello Divya!">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="2" y="4" width="20" height="16" rx="2"/>
-      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-    </svg>
-    Say hi!
-  </a>
+  <a class="btn btn-primary btn-lg" href="mailto:divyashrestha1222@gmail.com?subject=Hello Divya!">Say hi</a>
   <div class="contact-links">
     <a href="https://github.com/divya-ay" target="_blank" rel="noopener">GitHub</a>
     <a href="https://www.linkedin.com/in/divyaa-shrestha" target="_blank" rel="noopener">LinkedIn</a>
@@ -406,180 +354,6 @@
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) e.target.classList.add('show');
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  const toggle = document.getElementById('navToggle');
-  const links  = document.querySelector('.nav-links');
-  toggle.addEventListener('click', () => {
-    links.classList.toggle('open');
-    toggle.classList.toggle('active');
-  });
-  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    links.classList.remove('open');
-    toggle.classList.remove('active');
-  }));
-
-  /* ---------- Certificate modal (poster-style, shows PDF/image) ---------- */
-  const certModal = document.getElementById('certModal');
-  const certModalClose = document.getElementById('certModalClose');
-  const certModalBanner = document.getElementById('certModalBanner');
-  const certModalMark = document.getElementById('certModalMark');
-  const certModalTitle = document.getElementById('certModalTitle');
-  const certModalTags = document.getElementById('certModalTags');
-  const certModalSubtitle = document.getElementById('certModalSubtitle');
-  const certModalDocBody = document.getElementById('certModalDocBody');
-
-  const pdfjsAvailable = typeof window.pdfjsLib !== 'undefined';
-  if (pdfjsAvailable) {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
-  }
-
-  async function renderPdf(src) {
-    if (!pdfjsAvailable) {
-      throw new Error('PDF.js library not available');
-    }
-
-    const response = await fetch(src);
-    if (!response.ok) throw new Error('Failed to load certificate');
-    const arrayBuffer = await response.arrayBuffer();
-    const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
-    const pdf = await loadingTask.promise;
-    const page = await pdf.getPage(1);
-    const viewport = page.getViewport({ scale: 1.4 });
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    canvas.width = viewport.width;
-    canvas.height = viewport.height;
-    await page.render({ canvasContext: context, viewport }).promise;
-    return canvas;
-  }
-
-  document.querySelectorAll('.cert-card').forEach(card => {
-    card.addEventListener('click', async () => {
-      const title = card.dataset.title;
-      const subtitle = card.dataset.subtitle;
-      const type = card.dataset.type;
-      const src = card.dataset.src;
-      const tags = (card.dataset.tags || '').split(',').map(t => t.trim()).filter(Boolean);
-      const posterClass = [...card.classList].find(c => c.startsWith('cert-') && c !== 'cert-card');
-      const mark = card.querySelector('.poster-mark')?.textContent || '';
-
-      certModalTitle.textContent = title;
-      certModalMark.textContent = mark;
-      certModalBanner.className = 'project-modal-banner ' + posterClass;
-      certModalSubtitle.textContent = subtitle;
-
-      certModalTags.innerHTML = '';
-      tags.forEach(tag => {
-        const span = document.createElement('span');
-        span.className = 'project-tag-pill';
-        span.textContent = tag;
-        certModalTags.appendChild(span);
-      });
-
-      certModalDocBody.innerHTML = '';
-
-      if (type === 'pdf') {
-        if (!pdfjsAvailable) {
-          certModalDocBody.innerHTML = `<div class="pdf-fallback"><p>PDF preview library failed to load. <a href="${src}" target="_blank" rel="noopener">Open the certificate in a new tab</a>.</p></div>`;
-        } else {
-          try {
-            const canvas = await renderPdf(src);
-            certModalDocBody.appendChild(canvas);
-          } catch (error) {
-            certModalDocBody.innerHTML = `<div class="pdf-fallback"><p>Unable to preview this PDF inline. <a href="${src}" target="_blank" rel="noopener">Open the certificate in a new tab</a>.</p></div>`;
-            console.error('PDF preview error:', error);
-          }
-        }
-      } else {
-        certModalDocBody.innerHTML = `<img src="${src}" alt="${title} certificate"/>`;
-      }
-
-      certModal.classList.add('open');
-      certModal.setAttribute('aria-hidden', 'false');
-    });
-  });
-
-  const closeCertModal = () => {
-    certModal.classList.remove('open');
-    certModal.setAttribute('aria-hidden', 'true');
-    certModalDocBody.innerHTML = '';
-  };
-
-  certModalClose.addEventListener('click', closeCertModal);
-  certModal.addEventListener('click', e => {
-    if (e.target === certModal) closeCertModal();
-  });
-
-  /* ---------- Project (Netflix-style) modal ---------- */
-  const projectModal = document.getElementById('projectModal');
-  const projectModalClose = document.getElementById('projectModalClose');
-  const projectModalBanner = document.getElementById('projectModalBanner');
-  const projectModalMark = document.getElementById('projectModalMark');
-  const projectModalTitle = document.getElementById('projectModalTitle');
-  const projectModalTags = document.getElementById('projectModalTags');
-  const projectModalDesc = document.getElementById('projectModalDesc');
-  const projectModalGithub = document.getElementById('projectModalGithub');
-
-  document.querySelectorAll('.poster-card:not(.cert-card)').forEach(card => {
-    card.addEventListener('click', () => {
-      const title = card.dataset.title;
-      const year = card.dataset.year;
-      const type = card.dataset.type;
-      const tags = (card.dataset.tags || '').split(',').map(t => t.trim()).filter(Boolean);
-      const desc = card.dataset.desc;
-      const github = card.dataset.github;
-      const posterClass = [...card.classList].find(c => c.startsWith('poster-') && c !== 'poster-card');
-      const mark = card.querySelector('.poster-mark')?.textContent || '';
-
-      projectModalTitle.textContent = title;
-      projectModalMark.textContent = mark;
-      projectModalBanner.className = 'project-modal-banner ' + posterClass;
-      projectModalDesc.textContent = desc;
-
-      projectModalTags.innerHTML = '';
-      [year, type, ...tags].filter(Boolean).forEach(tag => {
-        const span = document.createElement('span');
-        span.className = 'project-tag-pill';
-        span.textContent = tag;
-        projectModalTags.appendChild(span);
-      });
-
-      if (github) {
-        projectModalGithub.href = github;
-        projectModalGithub.style.display = 'inline-flex';
-      } else {
-        projectModalGithub.style.display = 'none';
-      }
-
-      projectModal.classList.add('open');
-      projectModal.setAttribute('aria-hidden', 'false');
-    });
-  });
-
-  const closeProjectModal = () => {
-    projectModal.classList.remove('open');
-    projectModal.setAttribute('aria-hidden', 'true');
-  };
-
-  projectModalClose.addEventListener('click', closeProjectModal);
-  projectModal.addEventListener('click', e => {
-    if (e.target === projectModal) closeProjectModal();
-  });
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      if (certModal.classList.contains('open')) closeCertModal();
-      if (projectModal.classList.contains('open')) closeProjectModal();
-    }
-  });
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
