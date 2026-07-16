@@ -27,6 +27,17 @@ links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
   toggle.classList.remove('active');
 }));
 
+/* ---------- Project poster photos ----------
+   Fill in data-img="images/your-screenshot.jpg" on any .project-card
+   in index.html and it'll replace the gradient placeholder automatically. */
+document.querySelectorAll('.project-card').forEach(card => {
+  const img = card.dataset.img;
+  if (img && img.trim() !== '') {
+    card.style.backgroundImage = `url('${img}')`;
+    card.classList.add('has-photo');
+  }
+});
+
 /* ---------- Certificate modal (poster-style, shows PDF/image) ---------- */
 const certModal = document.getElementById('certModal');
 const certModalClose = document.getElementById('certModalClose');
@@ -129,7 +140,7 @@ const projectModalTags = document.getElementById('projectModalTags');
 const projectModalDesc = document.getElementById('projectModalDesc');
 const projectModalGithub = document.getElementById('projectModalGithub');
 
-document.querySelectorAll('.poster-card:not(.cert-card)').forEach(card => {
+document.querySelectorAll('.project-card').forEach(card => {
   card.addEventListener('click', () => {
     const title = card.dataset.title;
     const year = card.dataset.year;
@@ -137,8 +148,8 @@ document.querySelectorAll('.poster-card:not(.cert-card)').forEach(card => {
     const tags = (card.dataset.tags || '').split(',').map(t => t.trim()).filter(Boolean);
     const desc = card.dataset.desc;
     const github = card.dataset.github;
-    const posterClass = [...card.classList].find(c => c.startsWith('poster-') && c !== 'poster-card');
-    const mark = card.querySelector('.poster-mark')?.textContent || '';
+    const posterClass = [...card.classList].find(c => c.startsWith('poster-'));
+    const mark = card.dataset.mark || '';
 
     projectModalTitle.textContent = title;
     projectModalMark.textContent = mark;
