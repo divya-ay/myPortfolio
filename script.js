@@ -169,7 +169,6 @@ const projectModalGithub = document.getElementById('projectModalGithub');
 document.querySelectorAll('.project-card').forEach(card => {
   card.addEventListener('click', () => {
     const title = card.dataset.title;
-    const year = card.dataset.year;
     const type = card.dataset.type;
     const tags = (card.dataset.tags || '').split(',').map(t => t.trim()).filter(Boolean);
     const desc = card.dataset.desc;
@@ -184,7 +183,7 @@ document.querySelectorAll('.project-card').forEach(card => {
 
     projectModalTags.innerHTML = '';
 
-    [year, type].filter(Boolean).forEach(tag => {
+    [type].filter(Boolean).forEach(tag => {
         const span = document.createElement('span');
         span.className = 'project-tag-pill';
         span.textContent = tag;

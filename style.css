@@ -466,22 +466,6 @@ section:nth-child(even) {
   color: var(--accent);
 }
 
-.meta-links-box {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 8px;
-}
-
-.meta-links-box a {
-  text-decoration: none;
-  color: var(--muted);
-  font-size: 0.9rem;
-  transition: color 0.2s;
-}
-
-.meta-links-box a:hover { color: var(--accent); }
-
 .compact-summary {
   max-width: 760px;
   padding: 28px 30px;
@@ -532,40 +516,6 @@ section:nth-child(even) {
     flex-wrap:wrap;
     gap:10px;
     align-items:center;
-    max-width:220px;   /* adjust depending on your card width */
-}
-
-.tech-icon{
-    font-size:26px;
-    transition:.25s ease;
-}
-
-.tech-icon:hover{
-    transform:translateY(-2px) scale(1.1);
-}
-
-.github-icon{
-    color: var(--text);
-}
-
-.express-icon{
-    color: var(--text);
-}
-
-.project-modal-tags{
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
-}
-
-.project-tag-pill{
-    display:flex;
-    align-items:center;
-    gap:8px;
-}
-
-.project-tag-pill i{
-    font-size:18px;
 }
 
 .project-card {
@@ -603,7 +553,6 @@ section:nth-child(even) {
 .project-card.poster-2 { background-image: linear-gradient(155deg, #2a2154 0%, #17123a 60%, #0a0a1c 100%); }
 .project-card.poster-3 { background-image: linear-gradient(155deg, #0f4a3d 0%, #0c2a2a 60%, #06151a 100%); }
 .project-card.poster-4 { background-image: linear-gradient(155deg, #5c2a17 0%, #331a14 60%, #170c0c 100%); }
-.project-card.poster-5 { background-image: linear-gradient(155deg, #3a1d4a 0%, #221331 60%, #100a1c 100%); }
 
 .project-card-mark {
   position: absolute;
@@ -667,7 +616,7 @@ section:nth-child(even) {
   color: var(--accent);
 }
 
-.status-pill.progress {
+.status-pill.in-progress {
   background: var(--progress-bg);
   color: var(--progress-text);
 }
@@ -687,11 +636,6 @@ section:nth-child(even) {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-}
-
-.tech-chips {
-  display: flex;
-  gap: 6px;
 }
 
 .tech-chip {
@@ -784,20 +728,6 @@ section:nth-child(even) {
   padding: 16px 14px;
 }
 
-.poster-featured {
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--on-accent);
-  background: var(--accent-2);
-  padding: 3px 8px;
-  border-radius: 6px;
-  margin-bottom: 8px;
-}
-
 .poster-label h3 {
   font-family: var(--font-display);
   font-size: 0.98rem;
@@ -818,7 +748,6 @@ section:nth-child(even) {
 .poster-2 .poster-art { background: linear-gradient(155deg, #2a2154 0%, #17123a 60%, #0a0a1c 100%); }
 .poster-3 .poster-art { background: linear-gradient(155deg, #0f4a3d 0%, #0c2a2a 60%, #06151a 100%); }
 .poster-4 .poster-art { background: linear-gradient(155deg, #5c2a17 0%, #331a14 60%, #170c0c 100%); }
-.poster-5 .poster-art { background: linear-gradient(155deg, #3a1d4a 0%, #221331 60%, #100a1c 100%); }
 
 .cert-1 .poster-art { background: linear-gradient(155deg, #1a4a3a 0%, #0d2a22 60%, #071510 100%); }
 .cert-2 .poster-art { background: linear-gradient(155deg, #4a2a1a 0%, #2a170d 60%, #150b07 100%); }
@@ -1027,7 +956,6 @@ body::before {
 .project-modal-banner.poster-2 { background: linear-gradient(155deg, #2a2154 0%, #17123a 60%, #0a0a1c 100%); }
 .project-modal-banner.poster-3 { background: linear-gradient(155deg, #0f4a3d 0%, #0c2a2a 60%, #06151a 100%); }
 .project-modal-banner.poster-4 { background: linear-gradient(155deg, #5c2a17 0%, #331a14 60%, #170c0c 100%); }
-.project-modal-banner.poster-5 { background: linear-gradient(155deg, #3a1d4a 0%, #221331 60%, #100a1c 100%); }
 
 .project-modal-banner.cert-1 { background: linear-gradient(155deg, #1a4a3a 0%, #0d2a22 60%, #071510 100%); }
 .project-modal-banner.cert-2 { background: linear-gradient(155deg, #4a2a1a 0%, #2a170d 60%, #150b07 100%); }
@@ -1045,15 +973,21 @@ body::before {
   margin-bottom: 20px;
 }
 
-.project-tag-pill {
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  font-weight: 400;
-  padding: 5px 13px;
-  border-radius: 8px;
-  background: var(--accent-l);
-  color: var(--accent);
-  border: 1px solid rgba(var(--accent-rgb),0.25);
+.project-tag-pill{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--font-mono);
+    font-size:.74rem;
+    padding:5px 13px;
+    border-radius:8px;
+    background:var(--accent-l);
+    color:var(--accent);
+    border:1px solid rgba(var(--accent-rgb),.25);
+}
+
+.project-tag-pill i{
+    font-size:18px;
 }
 
 .project-modal-desc {
