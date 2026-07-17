@@ -552,6 +552,22 @@ section:nth-child(even) {
     color: var(--text);
 }
 
+.project-modal-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+.project-tag-pill{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.project-tag-pill i{
+    font-size:18px;
+}
+
 .project-card {
   position: relative;
   aspect-ratio: 2 / 3;

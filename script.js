@@ -30,6 +30,32 @@ links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
 /* ---------- Project poster photos ----------
    Fill in data-img="images/your-screenshot.jpg" on any .project-card
    in index.html and it'll replace the gradient placeholder automatically. */
+
+const techIcons = {
+  "Python": "devicon-python-plain colored",
+  "Java": "devicon-java-plain colored",
+  "JavaScript": "devicon-javascript-plain colored",
+  "TypeScript": "devicon-typescript-plain colored",
+  "HTML": "devicon-html5-plain colored",
+  "CSS": "devicon-css3-plain colored",
+  "Django": "devicon-django-plain colored",
+  "React": "devicon-react-original colored",
+  "React Native": "devicon-react-original colored",
+  "Node.js": "devicon-nodejs-plain colored",
+  "Express": "devicon-express-original",
+  "PostgreSQL": "devicon-postgresql-plain colored",
+  "MySQL": "devicon-mysql-plain colored",
+  "Docker": "devicon-docker-plain colored",
+  "Git": "devicon-git-plain colored",
+  "GitHub": "devicon-github-original",
+  "Pandas": "devicon-pandas-original colored",
+  "NumPy": "devicon-numpy-original colored",
+  "Scikit-Learn": "devicon-scikitlearn-plain colored",
+  "Jupyter": "devicon-jupyter-plain colored",
+  "Matplotlib": "devicon-matplotlib-plain colored",
+  "Figma": "devicon-figma-plain colored"
+};
+
 document.querySelectorAll('.project-card').forEach(card => {
   const img = card.dataset.img;
   if (img && img.trim() !== '') {
@@ -157,11 +183,27 @@ document.querySelectorAll('.project-card').forEach(card => {
     projectModalDesc.textContent = desc;
 
     projectModalTags.innerHTML = '';
-    [year, type, ...tags].filter(Boolean).forEach(tag => {
-      const span = document.createElement('span');
-      span.className = 'project-tag-pill';
-      span.textContent = tag;
-      projectModalTags.appendChild(span);
+
+    [year, type].filter(Boolean).forEach(tag => {
+        const span = document.createElement('span');
+        span.className = 'project-tag-pill';
+        span.textContent = tag;
+        projectModalTags.appendChild(span);
+        });
+
+        tags.forEach(tag => {
+        const pill = document.createElement('span');
+        pill.className = 'project-tag-pill';
+
+        const icon = techIcons[tag];
+
+        if (icon) {
+            pill.innerHTML = `<i class="${icon}"></i> ${tag}`;
+        } else {
+            pill.textContent = tag;
+        }
+
+        projectModalTags.appendChild(pill);
     });
 
     if (github) {
