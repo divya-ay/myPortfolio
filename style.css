@@ -1058,6 +1058,11 @@ body::before {
 }
 
 /* ── CONTACT / FOOTER — theme-aware page footer styling ── */
+.contact-icon i{
+    font-size:1.4rem;
+    line-height:1;
+}
+
 .contact-section {
   background: var(--section-alt);
   color: var(--text);
