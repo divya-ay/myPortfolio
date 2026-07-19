@@ -150,6 +150,13 @@ nav {
   transition: color 0.2s;
 }
 
+.nav-links .nav-download {
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
 .nav-actions {
   display: flex;
   align-items: center;
@@ -225,6 +232,26 @@ nav {
   background: var(--accent-hover);
   transform: translateY(-2px);
   box-shadow: 0 10px 30px rgba(var(--accent-rgb),0.28);
+}
+
+.btn-download {
+  background: rgba(var(--accent-rgb), 0.12);
+  color: var(--accent);
+  border: 1px solid rgba(var(--accent-rgb), 0.28);
+  box-shadow: 0 4px 18px rgba(var(--accent-rgb), 0.08);
+}
+
+.btn-download:hover {
+  background: rgba(var(--accent-rgb), 0.18);
+  border-color: rgba(var(--accent-rgb), 0.42);
+  transform: translateY(-1px);
+}
+
+.nav-links .nav-download {
+  margin-left: auto;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.88rem;
 }
 
 .btn-ghost {
