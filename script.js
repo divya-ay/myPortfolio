@@ -233,3 +233,200 @@ document.addEventListener('keydown', e => {
     if (projectModal.classList.contains('open')) closeProjectModal();
   }
 });
+
+/* ============================================================
+   TECH STACK DOCK — macOS-style continuous magnification
+   ============================================================
+   How it works:
+   1. On mousemove over the dock, we record the mouse X position.
+   2. On every animation frame, each icon's TARGET scale is
+      calculated from its distance to the mouse (closer = bigger),
+      using a smooth cosine falloff curve.
+   3. Instead of jumping straight to that target (which would look
+      jittery), each icon's CURRENT scale eases toward the target a
+      little every frame (linear interpolation, "lerp"). That's what
+      makes the whole dock ripple smoothly as the mouse moves across
+      it, instead of icons popping between two hover states.
+   4. The animation loop keeps itself running only while something
+      is still moving, and stops itself once everything has settled
+      back to rest — so it isn't burning CPU when idle.
+   Magnification is disabled on touch devices / narrow screens; the
+   dock still works (tap to show tooltip + scroll), it just doesn't
+   magnify, per the mobile requirement.
+   ============================================================ */
+(function initTechDock() {
+  const dock = document.getElementById('techDock');
+  if (!dock) return;
+
+  const items = Array.from(dock.querySelectorAll('.dock-item'));
+  if (!items.length) return;
+
+  const MAX_SCALE = 1.7;   // scale of the icon directly under the cursor
+  const MIN_SCALE = 1;     // resting scale
+  const INFLUENCE = 110;   // px radius on each side of the cursor that reacts
+  const LIFT = 16;         // px the peak icon rises above the dock
+  const EASE = 0.22;       // 0–1: how fast current scale chases target scale
+
+  let mouseX = null;
+  let rafId = null;
+  let magnifyEnabled = false;
+
+  // Per-icon animation state, kept in a plain array (index-matched to `items`)
+  const state = items.map(() => ({ scale: MIN_SCALE, target: MIN_SCALE }));
+
+  function isDesktopPointer() {
+    // Real mouse + hover support + wide enough viewport = full dock behavior.
+    const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    return hasFinePointer && window.innerWidth > 640;
+  }
+
+  function updateTargets() {
+    if (mouseX === null || !magnifyEnabled) {
+      state.forEach(s => { s.target = MIN_SCALE; });
+      return;
+    }
+    items.forEach((item, i) => {
+      const rect = item.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const distance = Math.min(Math.abs(mouseX - centerX), INFLUENCE);
+      const t = distance / INFLUENCE;                 // 0 = under cursor, 1 = out of range
+      const eased = (Math.cos(t * Math.PI) + 1) / 2;   // smooth cosine falloff (macOS-style curve)
+      state[i].target = MIN_SCALE + (MAX_SCALE - MIN_SCALE) * eased;
+    });
+  }
+
+  function tick() {
+    updateTargets();
+
+    let stillMoving = false;
+    items.forEach((item, i) => {
+      const s = state[i];
+      s.scale += (s.target - s.scale) * EASE;
+
+      if (Math.abs(s.target - s.scale) > 0.001) {
+        stillMoving = true;
+      } else {
+        s.scale = s.target;
+      }
+
+      const liftAmount = ((s.scale - MIN_SCALE) / (MAX_SCALE - MIN_SCALE)) * LIFT;
+      item.style.transform = `translateY(${-liftAmount}px) scale(${s.scale.toFixed(3)})`;
+    });
+
+    rafId = stillMoving ? requestAnimationFrame(tick) : null;
+  }
+
+  function requestTick() {
+    if (rafId === null) rafId = requestAnimationFrame(tick);
+  }
+
+  function handleMove(e) {
+    if (!magnifyEnabled) return;
+    mouseX = e.clientX;
+    requestTick();
+  }
+
+  function handleLeave() {
+    mouseX = null;
+    requestTick(); // let the loop ease everything back to rest, then it stops itself
+  }
+
+  function resetTransforms() {
+    items.forEach((item, i) => {
+      state[i].scale = MIN_SCALE;
+      state[i].target = MIN_SCALE;
+      item.style.transform = '';
+    });
+  }
+
+  function applyMode() {
+    magnifyEnabled = isDesktopPointer();
+    if (!magnifyEnabled) {
+      mouseX = null;
+      if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+      resetTransforms();
+    }
+  }
+
+  dock.addEventListener('mousemove', handleMove);
+  dock.addEventListener('mouseleave', handleLeave);
+  window.addEventListener('resize', applyMode);
+  applyMode();
+
+  /* ---------- Tooltip: fades in above whichever icon is hovered/focused ---------- */
+  items.forEach(item => {
+    const show = () => item.classList.add('tooltip-visible');
+    const hide = () => item.classList.remove('tooltip-visible');
+    item.addEventListener('mouseenter', show);
+    item.addEventListener('mouseleave', hide);
+    item.addEventListener('focus', show);
+    item.addEventListener('blur', hide);
+    // Touch devices: a tap shows the tooltip briefly without blocking the click.
+    item.addEventListener('touchstart', () => {
+      show();
+      setTimeout(hide, 900);
+    }, { passive: true });
+  });
+
+  /* ---------- Click: scroll to matching project(s), highlight ALL of
+     them, dim the rest, and fade the whole selection back to normal
+     after ~4s. A shared timer means clicking a different icon before
+     the previous fade finishes just restarts the window cleanly. ---------- */
+  const projectCards = Array.from(document.querySelectorAll('.project-card'));
+  const DIM_DURATION = 4000; // ms before the highlight/dim clears
+  let dimTimer = null;
+
+  function clearDockSelection() {
+    projectCards.forEach(card => {
+      card.classList.remove('dock-highlight', 'dock-dim');
+    });
+  }
+
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      const link = item.dataset.link;
+      if (link) {
+        window.open(link, '_blank', 'noopener');
+        return;
+      }
+
+      const keywords = (item.dataset.match || item.dataset.tech || '')
+        .split(',')
+        .map(k => k.trim().toLowerCase())
+        .filter(Boolean);
+
+      const matches = projectCards.filter(card => {
+        const tagSet = new Set(
+          (card.dataset.tags || '').toLowerCase().split(',').map(t => t.trim()).filter(Boolean)
+        );
+        return keywords.some(k => tagSet.has(k));
+      });
+
+      const target = matches[0] || document.getElementById('projects');
+      if (!target) return;
+
+      target.scrollIntoView({ behavior: 'smooth', block: matches.length ? 'center' : 'start' });
+
+      if (dimTimer !== null) {
+        clearTimeout(dimTimer);
+        dimTimer = null;
+      }
+      clearDockSelection();
+
+      if (matches.length) {
+        projectCards.forEach(card => {
+          if (matches.includes(card)) {
+            card.classList.add('dock-highlight');
+          } else {
+            card.classList.add('dock-dim');
+          }
+        });
+
+        dimTimer = setTimeout(() => {
+          clearDockSelection();
+          dimTimer = null;
+        }, DIM_DURATION);
+      }
+    });
+  });
+})();

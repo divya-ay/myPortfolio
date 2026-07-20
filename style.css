@@ -468,29 +468,194 @@ section:nth-child(even) {
   border-radius: 8px;
 }
 
-.skills {
+/* ══════════════════════════════════════════════════════════════
+   TECH STACK — macOS-style Dock
+   (replaces the old .skills pill list)
+
+   - The glass panel below is the "shelf". It sits inline in the
+     About section (not fixed to the viewport) so it stays part of
+     the page layout, but visually it floats via blur + shadow —
+     same glass language as the site's <nav>.
+   - Continuous magnification is computed in script.js on every
+     mousemove/rAF frame and applied via inline transform, NOT via
+     a CSS :hover transition — that's what makes it track the mouse
+     smoothly instead of snapping between two hover states.
+   - CSS below only supplies: layout, resting appearance, the
+     tooltip fade, the focus/tap state, and responsive fallbacks.
+   ══════════════════════════════════════════════════════════════ */
+
+.tech-dock {
+  --dock-size: 46px;      /* resting icon box size, set/read by JS too */
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 4px;
+  align-items: flex-end;   /* icons anchor to the bottom, like macOS */
+  gap: 10px;
+  margin-top: 6px;
+  padding: 14px 18px 12px;
+  width: fit-content;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  border-radius: 22px;
+  background: rgba(var(--accent-rgb), 0.06);
+  background-image: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0));
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid var(--border);
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.28),
+    0 2px 8px rgba(0,0,0,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+  transition: background 0.3s ease, border-color 0.3s ease;
+  scrollbar-width: none;
 }
 
-.skills span {
+.tech-dock::-webkit-scrollbar { display: none; }
+
+.dock-item {
+  position: relative;
+  flex: 0 0 auto;
+  width: var(--dock-size);
+  height: var(--dock-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transform-origin: bottom center; /* icons grow upward, feet stay put */
+  /* No CSS transition here on purpose: script.js already eases the
+     scale toward its target every frame (a "lerp"), which is what
+     makes the magnification track the mouse continuously. Adding a
+     CSS transition on top of that would double-smooth the motion
+     and make it feel laggy/rubber-banded. On touch devices (where
+     JS magnification is disabled) the mobile media query below adds
+     its own lightweight tap-feedback transition instead. */
+  will-change: transform;
+}
+
+.dock-icon {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* clicks/hover always resolve on .dock-item */
+}
+
+.dock-icon i {
+  font-size: calc(var(--dock-size) * 0.62);
+  line-height: 1;
+}
+
+/* Icons that don't ship a "colored" devicon variant (e.g. Express,
+   GitHub) inherit the current text color so they stay visible in
+   both themes, matching how they already behave on the project cards. */
+.dock-icon i:not(.colored) {
+  color: var(--text);
+}
+
+.dock-item:focus-visible {
+  outline: none;
+}
+
+.dock-item:focus-visible .dock-icon {
+  box-shadow: 0 0 0 2px var(--accent);
+  border-radius: 10px;
+}
+
+/* ---------- Tooltip ---------- */
+.dock-tooltip {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  left: 50%;
+  transform: translate(-50%, 4px);
+  white-space: nowrap;
   font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text);
   background: var(--surface);
   border: 1px solid var(--border);
-  color: var(--text);
-  font-size: 0.76rem;
-  font-weight: 400;
-  padding: 5px 13px;
+  padding: 5px 10px;
   border-radius: 8px;
-  transition: all 0.2s;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 10;
 }
 
-.skills span:hover {
-  background: var(--accent-l);
-  border-color: var(--accent);
-  color: var(--accent);
+.dock-item.tooltip-visible .dock-tooltip {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* Highlight flash on the project card the Dock scrolls to */
+.project-card.dock-highlight {
+  box-shadow:
+    0 0 0 3px rgba(var(--accent-rgb), 0.55),
+    0 24px 60px rgba(var(--accent-rgb), 0.25) !important;
+}
+
+/* Non-matching cards fade + blur back while a Dock selection is active */
+.project-card.dock-dim {
+  opacity: 0.35;
+  filter: blur(2px) saturate(0.7);
+}
+
+.project-card.dock-dim:hover,
+.project-card.dock-dim:focus-visible {
+  transform: none;
+}
+
+/* Give scroll targets breathing room under the fixed nav bar */
+#projects,
+.project-card {
+  scroll-margin-top: calc(var(--nav-h) + 20px);
+}
+
+/* ---------- Tablet: dock stays interactive but a bit more compact ---------- */
+@media (max-width: 860px) {
+  .tech-dock {
+    --dock-size: 40px;
+    gap: 8px;
+    padding: 12px 14px 10px;
+  }
+}
+
+/* ---------- Mobile: magnification disabled by script.js;
+   fall back to a calm, evenly-spaced, wrapping icon grid. ---------- */
+@media (max-width: 640px) {
+  .tech-dock {
+    --dock-size: 38px;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    gap: 14px 12px;
+    justify-content: flex-start;
+  }
+
+  /* No magnify on touch: transform is purely tap feedback. */
+  .dock-item {
+    transition: transform 0.12s ease-out;
+  }
+
+  .dock-item:active .dock-icon {
+    transform: scale(0.9);
+  }
+
+  .dock-tooltip {
+    bottom: calc(100% + 10px);
+    font-size: 0.68rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dock-item,
+  .dock-tooltip {
+    transition: none !important;
+  }
 }
 
 .compact-summary {
@@ -559,7 +724,8 @@ section:nth-child(even) {
   padding: 0;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s,
+    opacity 0.45s ease, filter 0.45s ease;
 }
 
 .project-card:hover,
