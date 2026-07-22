@@ -235,24 +235,10 @@ document.addEventListener('keydown', e => {
 });
 
 /* ============================================================
-   TECH STACK DOCK — macOS-style continuous magnification
-   ============================================================
-   How it works:
-   1. On mousemove over the dock, we record the mouse X position.
-   2. On every animation frame, each icon's TARGET scale is
-      calculated from its distance to the mouse (closer = bigger),
-      using a smooth cosine falloff curve.
-   3. Instead of jumping straight to that target (which would look
-      jittery), each icon's CURRENT scale eases toward the target a
-      little every frame (linear interpolation, "lerp"). That's what
-      makes the whole dock ripple smoothly as the mouse moves across
-      it, instead of icons popping between two hover states.
-   4. The animation loop keeps itself running only while something
-      is still moving, and stops itself once everything has settled
-      back to rest — so it isn't burning CPU when idle.
-   Magnification is disabled on touch devices / narrow screens; the
-   dock still works (tap to show tooltip + scroll), it just doesn't
-   magnify, per the mobile requirement.
+   TECH STACK DOCK — simplified hover + click behavior
+   - Click a tech icon to scroll to the matching project.
+   - Tooltips still appear on hover/focus.
+   - The animated magnification behavior is disabled.
    ============================================================ */
 (function initTechDock() {
   const dock = document.getElementById('techDock');
@@ -260,6 +246,24 @@ document.addEventListener('keydown', e => {
 
   const items = Array.from(dock.querySelectorAll('.dock-item'));
   if (!items.length) return;
+
+  const projectCards = Array.from(document.querySelectorAll('.project-card'));
+
+  // Exact-tag-token matching used by the click highlight, so "Java"
+  // never lights up "JavaScript" (substring matching used to do this).
+  function getMatches(item) {
+    const keywords = (item.dataset.match || item.dataset.tech || '')
+      .split(',')
+      .map(k => k.trim().toLowerCase())
+      .filter(Boolean);
+
+    return projectCards.filter(card => {
+      const tagSet = new Set(
+        (card.dataset.tags || '').toLowerCase().split(',').map(t => t.trim()).filter(Boolean)
+      );
+      return keywords.some(k => tagSet.has(k));
+    });
+  }
 
   const MAX_SCALE = 1.7;   // scale of the icon directly under the cursor
   const MIN_SCALE = 1;     // resting scale
@@ -275,9 +279,27 @@ document.addEventListener('keydown', e => {
   const state = items.map(() => ({ scale: MIN_SCALE, target: MIN_SCALE }));
 
   function isDesktopPointer() {
-    // Real mouse + hover support + wide enough viewport = full dock behavior.
     const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     return hasFinePointer && window.innerWidth > 640;
+  }
+
+  const DOCK_MAX_WIDTH = 720; // must match .tech-dock's CSS max-width
+
+  /* Shrink --dock-size just enough that all icons fit the dock's own
+     capped width with no horizontal scrolling. Only runs on desktop —
+     mobile already wraps to a grid via the existing media query,
+     which needs the default sizes. */
+  function fitDockSize() {
+    if (!magnifyEnabled) {
+      dock.style.removeProperty('--dock-size');
+      return;
+    }
+    const available = Math.min(dock.parentElement.clientWidth, DOCK_MAX_WIDTH);
+    const gap = 10;
+    const paddingX = 44; // matches .tech-dock's left+right padding
+    const raw = (available - paddingX - (items.length - 1) * gap) / items.length;
+    const size = Math.max(30, Math.min(46, raw));
+    dock.style.setProperty('--dock-size', size.toFixed(1) + 'px');
   }
 
   function updateTargets() {
@@ -290,7 +312,7 @@ document.addEventListener('keydown', e => {
       const centerX = rect.left + rect.width / 2;
       const distance = Math.min(Math.abs(mouseX - centerX), INFLUENCE);
       const t = distance / INFLUENCE;                 // 0 = under cursor, 1 = out of range
-      const eased = (Math.cos(t * Math.PI) + 1) / 2;   // smooth cosine falloff (macOS-style curve)
+      const eased = (Math.cos(t * Math.PI) + 1) / 2;   // smooth cosine falloff curve
       state[i].target = MIN_SCALE + (MAX_SCALE - MIN_SCALE) * eased;
     });
   }
@@ -346,6 +368,7 @@ document.addEventListener('keydown', e => {
       if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
       resetTransforms();
     }
+    fitDockSize();
   }
 
   dock.addEventListener('mousemove', handleMove);
@@ -372,7 +395,6 @@ document.addEventListener('keydown', e => {
      them, dim the rest, and fade the whole selection back to normal
      after ~4s. A shared timer means clicking a different icon before
      the previous fade finishes just restarts the window cleanly. ---------- */
-  const projectCards = Array.from(document.querySelectorAll('.project-card'));
   const DIM_DURATION = 4000; // ms before the highlight/dim clears
   let dimTimer = null;
 
@@ -390,18 +412,7 @@ document.addEventListener('keydown', e => {
         return;
       }
 
-      const keywords = (item.dataset.match || item.dataset.tech || '')
-        .split(',')
-        .map(k => k.trim().toLowerCase())
-        .filter(Boolean);
-
-      const matches = projectCards.filter(card => {
-        const tagSet = new Set(
-          (card.dataset.tags || '').toLowerCase().split(',').map(t => t.trim()).filter(Boolean)
-        );
-        return keywords.some(k => tagSet.has(k));
-      });
-
+      const matches = getMatches(item);
       const target = matches[0] || document.getElementById('projects');
       if (!target) return;
 

@@ -85,124 +85,118 @@
 
 <section id="about" class="reveal">
   <p class="section-label">about</p>
+
   <div class="about-grid">
-    <div class="about-text">
-      <p>
-        I recently completed a Bachelor's degree in Informatics Engineering, where I developed a strong foundation in software engineering, databases, algorithms, and web development.
-      </p>
+    <div class="about-intro">
+      <div class="about-text">
+        <p>
+          I recently completed a Bachelor's degree in Informatics Engineering, where I developed a strong foundation in software engineering, databases, algorithms, and web development.
+        </p>
 
-      <p>
-        Throughout my academic journey, I worked on projects ranging from full-stack web applications and mobile development to machine learning, strengthening both my technical skills and collaborative experience.
-      </p>
+        <p>
+          Throughout my academic journey, I worked on projects ranging from full-stack web applications and mobile development to machine learning, strengthening both my technical skills and collaborative experience.
+        </p>
 
-      <p>
-        I'm particularly interested in building software that is intuitive, reliable, and solves real-world problems. As I begin my professional career, I'm eager to continue learning, contribute to meaningful projects, and grow as a software engineer.
-      </p>
+        <p>
+          I'm particularly interested in building software that is intuitive, reliable, and solves real-world problems. As I begin my professional career, I'm eager to continue learning, contribute to meaningful projects, and grow as a software engineer.
+        </p>
+      </div>
     </div>
-    <div class="about-side">
+
+    <div class="tech-showcase">
       <p class="side-label">Tech I've worked with</p>
 
-      <!--
-        TECH STACK — macOS-style interactive Dock
-        -------------------------------------------------------------
-        Each .dock-item is one icon. Magnification / lift is driven
-        continuously by mouse position in script.js (not CSS :hover).
+      <div class="tech-showcase-grid">
+        <div class="tech-shell">
+          <nav class="tech-dock" id="techDock" aria-label="Tech stack. Click an icon to jump to related work.">
+      <button type="button" class="dock-item" data-tech="Python" data-match="Python">
+        <span class="dock-icon"><i class="devicon-python-plain colored"></i></span>
+        <span class="dock-tooltip" role="tooltip">Python</span>
+      </button>
 
-        data-tech   → label shown in the tooltip
-        data-match  → comma-separated keyword(s) matched (case-insensitive)
-                      against a .project-card's data-tags in the
-                      Projects section, so clicking scrolls to the
-                      most relevant project for that technology.
-        data-link   → if present, clicking opens this URL in a new tab
-                      instead of scrolling (used for Git → GitHub).
+      <button type="button" class="dock-item" data-tech="Java" data-match="Java">
+        <span class="dock-icon"><i class="devicon-java-plain colored"></i></span>
+        <span class="dock-tooltip" role="tooltip">Java</span>
+      </button>
 
-        If a technology has no matching project tag anywhere in the
-        Projects section (currently: Java, C / C++), the click falls
-        back to scrolling to the top of the Projects section. To wire
-        up a dedicated target later, just add that tech name to a
-        project's data-tags attribute (or add a data-link).
-      -->
-      <nav class="tech-dock" id="techDock" aria-label="Tech stack. Click an icon to jump to related work.">
-        <button type="button" class="dock-item" data-tech="Python" data-match="Python">
-          <span class="dock-icon"><i class="devicon-python-plain colored"></i></span>
-          <span class="dock-tooltip" role="tooltip">Python</span>
-        </button>
+      <button type="button" class="dock-item" data-tech="C / C++" data-match="C++">
+        <span class="dock-icon"><i class="devicon-cplusplus-plain colored"></i></span>
+        <span class="dock-tooltip" role="tooltip">C / C++</span>
+      </button>
 
-        <button type="button" class="dock-item" data-tech="Java" data-match="Java">
-          <span class="dock-icon"><i class="devicon-java-plain colored"></i></span>
-          <span class="dock-tooltip" role="tooltip">Java</span>
-        </button>
+      <button type="button" class="dock-item" data-tech="JavaScript" data-match="JavaScript">
+        <span class="dock-icon"><i class="devicon-javascript-plain colored"></i></span>
+        <span class="dock-tooltip" role="tooltip">JavaScript</span>
+      </button>
 
-        <button type="button" class="dock-item" data-tech="C / C++" data-match="C++">
-          <span class="dock-icon"><i class="devicon-cplusplus-plain colored"></i></span>
-          <span class="dock-tooltip" role="tooltip">C / C++</span>
-        </button>
+      <button type="button" class="dock-item" data-tech="TypeScript" data-match="TypeScript">
+        <span class="dock-icon"><i class="devicon-typescript-plain colored"></i></span>
+        <span class="dock-tooltip" role="tooltip">TypeScript</span>
+      </button>
 
-        <button type="button" class="dock-item" data-tech="JavaScript" data-match="JavaScript">
-          <span class="dock-icon"><i class="devicon-javascript-plain colored"></i></span>
-          <span class="dock-tooltip" role="tooltip">JavaScript</span>
-        </button>
+      <button type="button" class="dock-item" data-tech="HTML5" data-match="HTML">
+        <span class="dock-icon"><i class="devicon-html5-plain colored"></i></span>
+        <span class="dock-tooltip" role="tooltip">HTML5</span>
+      </button>
 
-        <button type="button" class="dock-item" data-tech="TypeScript" data-match="TypeScript">
-          <span class="dock-icon"><i class="devicon-typescript-plain colored"></i></span>
-          <span class="dock-tooltip" role="tooltip">TypeScript</span>
-        </button>
+      <button type="button" class="dock-item" data-tech="CSS3" data-match="CSS">
+        <span class="dock-icon"><i class="devicon-css3-plain colored"></i></span>
+        <span class="dock-tooltip" role="tooltip">CSS3</span>
+      </button>
 
-        <button type="button" class="dock-item" data-tech="HTML5" data-match="HTML">
-          <span class="dock-icon"><i class="devicon-html5-plain colored"></i></span>
-          <span class="dock-tooltip" role="tooltip">HTML5</span>
-        </button>
+      <button type="button" class="dock-item" data-tech="Django" data-match="Django">
+        <span class="dock-icon"><i class="devicon-django-plain colored"></i></span>
+        <span class="dock-tooltip" role="tooltip">Django</span>
+      </button>
 
-        <button type="button" class="dock-item" data-tech="CSS3" data-match="CSS">
-          <span class="dock-icon"><i class="devicon-css3-plain colored"></i></span>
-          <span class="dock-tooltip" role="tooltip">CSS3</span>
-        </button>
+      <button type="button" class="dock-item" data-tech="React" data-match="React,React Native">
+        <span class="dock-icon"><i class="devicon-react-original colored"></i></span>
+        <span class="dock-tooltip" role="tooltip">React</span>
+      </button>
 
-        <button type="button" class="dock-item" data-tech="Django" data-match="Django">
-          <span class="dock-icon"><i class="devicon-django-plain colored"></i></span>
-          <span class="dock-tooltip" role="tooltip">Django</span>
-        </button>
+      <button type="button" class="dock-item" data-tech="Node.js" data-match="Node.js">
+        <span class="dock-icon"><i class="devicon-nodejs-plain colored"></i></span>
+        <span class="dock-tooltip" role="tooltip">Node.js</span>
+      </button>
 
-        <button type="button" class="dock-item" data-tech="React" data-match="React,React Native">
-          <span class="dock-icon"><i class="devicon-react-original colored"></i></span>
-          <span class="dock-tooltip" role="tooltip">React</span>
-        </button>
+      <button type="button" class="dock-item" data-tech="Express" data-match="Express">
+        <span class="dock-icon"><i class="devicon-express-original"></i></span>
+        <span class="dock-tooltip" role="tooltip">Express</span>
+      </button>
 
-        <button type="button" class="dock-item" data-tech="Node.js" data-match="Node.js">
-          <span class="dock-icon"><i class="devicon-nodejs-plain colored"></i></span>
-          <span class="dock-tooltip" role="tooltip">Node.js</span>
-        </button>
+      <button type="button" class="dock-item" data-tech="React Native" data-match="React Native">
+        <span class="dock-icon"><i class="devicon-react-original colored"></i></span>
+        <span class="dock-tooltip" role="tooltip">React Native</span>
+      </button>
 
-        <button type="button" class="dock-item" data-tech="Express" data-match="Express">
-          <span class="dock-icon"><i class="devicon-express-original"></i></span>
-          <span class="dock-tooltip" role="tooltip">Express</span>
-        </button>
+      <button type="button" class="dock-item" data-tech="SQL / MySQL" data-match="MySQL,PostgreSQL,SQL">
+        <span class="dock-icon"><i class="devicon-mysql-plain colored"></i></span>
+        <span class="dock-tooltip" role="tooltip">SQL / MySQL</span>
+      </button>
 
-        <button type="button" class="dock-item" data-tech="React Native" data-match="React Native">
-          <span class="dock-icon"><i class="devicon-react-original colored"></i></span>
-          <span class="dock-tooltip" role="tooltip">React Native</span>
-        </button>
+      <button type="button" class="dock-item" data-tech="Pandas" data-match="Pandas">
+        <span class="dock-icon"><i class="devicon-pandas-original colored"></i></span>
+        <span class="dock-tooltip" role="tooltip">Pandas</span>
+      </button>
 
-        <button type="button" class="dock-item" data-tech="SQL / MySQL" data-match="MySQL,PostgreSQL,SQL">
-          <span class="dock-icon"><i class="devicon-mysql-plain colored"></i></span>
-          <span class="dock-tooltip" role="tooltip">SQL / MySQL</span>
-        </button>
+      <button type="button" class="dock-item" data-tech="Scikit-learn" data-match="Scikit-Learn">
+        <span class="dock-icon"><i class="devicon-scikitlearn-plain colored"></i></span>
+        <span class="dock-tooltip" role="tooltip">Scikit-learn</span>
+      </button>
 
-        <button type="button" class="dock-item" data-tech="Pandas" data-match="Pandas">
-          <span class="dock-icon"><i class="devicon-pandas-original colored"></i></span>
-          <span class="dock-tooltip" role="tooltip">Pandas</span>
-        </button>
+      <button type="button" class="dock-item" data-tech="Git" data-link="https://github.com/divya-ay">
+        <span class="dock-icon"><i class="devicon-git-plain colored"></i></span>
+        <span class="dock-tooltip" role="tooltip">Git → GitHub</span>
+      </button>
+          </nav>
+        </div>
 
-        <button type="button" class="dock-item" data-tech="Scikit-learn" data-match="Scikit-Learn">
-          <span class="dock-icon"><i class="devicon-scikitlearn-plain colored"></i></span>
-          <span class="dock-tooltip" role="tooltip">Scikit-learn</span>
-        </button>
-
-        <button type="button" class="dock-item" data-tech="Git" data-link="https://github.com/divya-ay">
-          <span class="dock-icon"><i class="devicon-git-plain colored"></i></span>
-          <span class="dock-tooltip" role="tooltip">Git → GitHub</span>
-        </button>
-      </nav>
+        <aside class="tech-info-panel" id="techInfoPanel">
+          <div class="tech-info-body" id="techInfoBody">
+            <p class="tech-info-default">Hover over a technology to see where I’ve used it across projects.</p>
+          </div>
+        </aside>
+      </div>
     </div>
   </div>
 </section>
@@ -256,7 +250,7 @@
       data-img=""
       data-title="QuizHub"
       data-type="Web App"
-      data-tags="React,Realtime,JavaScript"
+      data-tags="React,Realtime,JavaScript,Python,Django"
       data-desc="A multiplayer quiz platform inspired by Kahoot, created to explore real-time interaction and user-driven content. Players join live rooms and compete on shared questions as scores update instantly."
       data-github="https://github.com/divya-ay/QuizHub.git">
       <span class="project-card-mark">QH</span>

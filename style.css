@@ -428,17 +428,44 @@ section:nth-child(even) {
   transition: background 0.3s ease;
 }
 
+.about-intro {
+  max-width: none;
+  margin: 0;
+  padding: 32px 30px;
+  border-radius: 28px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.16);
+  box-shadow: 0 28px 72px rgba(0,0,0,0.22);
+}
+
 .about-grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 60px;
+  grid-template-columns: minmax(0, 1.55fr) minmax(360px, 440px);
+  gap: 56px;
   align-items: start;
+}
+
+.about-grid > * {
+  width: 100%;
+}
+
+.about-grid .tech-showcase {
+  min-height: 320px;
+  padding-top: 8px;
+}
+
+@media (max-width: 860px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
 }
 
 .about-text p {
   color: var(--muted);
-  margin-bottom: 16px;
-  font-size: 1.02rem;
+  margin-bottom: 18px;
+  font-size: 1.05rem;
+  line-height: 1.75;
 }
 
 .side-label {
@@ -450,93 +477,269 @@ section:nth-child(even) {
   margin-bottom: 14px;
 }
 
-.about-pill-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 4px 0 18px;
-}
-
-.about-pill-list span {
-  font-family: var(--font-mono);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--text);
-  font-size: 0.76rem;
-  font-weight: 400;
-  padding: 5px 13px;
-  border-radius: 8px;
-}
-
 /* ══════════════════════════════════════════════════════════════
-   TECH STACK — macOS-style Dock
-   (replaces the old .skills pill list)
-
-   - The glass panel below is the "shelf". It sits inline in the
-     About section (not fixed to the viewport) so it stays part of
-     the page layout, but visually it floats via blur + shadow —
-     same glass language as the site's <nav>.
-   - Continuous magnification is computed in script.js on every
-     mousemove/rAF frame and applied via inline transform, NOT via
-     a CSS :hover transition — that's what makes it track the mouse
-     smoothly instead of snapping between two hover states.
-   - CSS below only supplies: layout, resting appearance, the
-     tooltip fade, the focus/tap state, and responsive fallbacks.
+   TECH STACK — simplified tech showcase layout
+   - This section shows a compact tech dock and a matching info panel.
+   - Click behavior still scrolls to the related project.
+   - CSS below supplies layout, appearance, tooltip styling, and responsive defaults.
    ══════════════════════════════════════════════════════════════ */
 
-.tech-dock {
-  --dock-size: 46px;      /* resting icon box size, set/read by JS too */
-  display: flex;
-  align-items: flex-end;   /* icons anchor to the bottom, like macOS */
-  gap: 10px;
-  margin-top: 6px;
-  padding: 14px 18px 12px;
-  width: fit-content;
+/* ══════════════════════════════════════════════════════════════
+   TECH DOCK — clean shelf panel with hover/click support
+   ══════════════════════════════════════════════════════════════ */
+
+.tech-showcase {
   max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.tech-showcase .side-label {
+  text-align: left;
+  margin-bottom: 18px;
+  font-size: 0.92rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.tech-showcase-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 340px);
+  align-items: start;
+  gap: 24px;
+}
+
+.tech-shell,
+.tech-info-panel {
+  padding: 24px;
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.08);
+  box-shadow: 0 22px 42px rgba(0,0,0,0.12);
+}
+
+.tech-shell {
+  display: grid;
+  gap: 18px;
+}
+
+.tech-dock {
+  --dock-size: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 14px;
+  min-width: 0;
+  width: 100%;
+  padding: 18px 16px;
   overflow-x: auto;
   overflow-y: visible;
-  border-radius: 22px;
-  background: rgba(var(--accent-rgb), 0.06);
-  background-image: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0));
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
-  backdrop-filter: blur(20px) saturate(150%);
-  border: 1px solid var(--border);
-  box-shadow:
-    0 18px 40px rgba(0,0,0,0.28),
-    0 2px 8px rgba(0,0,0,0.12),
-    inset 0 1px 0 rgba(255,255,255,0.06);
-  transition: background 0.3s ease, border-color 0.3s ease;
-  scrollbar-width: none;
+  border-radius: 24px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.16);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
 .tech-dock::-webkit-scrollbar { display: none; }
 
+.tech-showcase-grid > * {
+  min-height: 240px;
+}
+
 .dock-item {
   position: relative;
   flex: 0 0 auto;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: auto;
+  min-width: 80px;
+  padding: 10px 8px 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transform-origin: bottom center;
+  will-change: transform;
+}
+
+.dock-item::after {
+  content: attr(data-tech);
+  display: block;
+  margin-top: 8px;
+  font-size: 0.72rem;
+  line-height: 1.3;
+  color: var(--muted);
+  white-space: nowrap;
+  text-align: center;
+  max-width: 88px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 860px) {
+  .dock-item {
+    min-width: 64px;
+    padding: 8px 6px 4px;
+  }
+
+  .dock-item::after {
+    font-size: 0.68rem;
+    max-width: 72px;
+  }
+}
+
+.dock-icon {
   width: var(--dock-size);
   height: var(--dock-size);
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
+}
+
+.tech-info-panel {
+  min-width: 0;
+  padding: 28px 26px;
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.16);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.14);
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tech-info-panel,
+.tech-dock {
+  min-height: 220px;
+}
+
+@media (max-width: 860px) {
+  .tech-dock {
+    justify-content: center;
+  }
+}
+
+.tech-info-body {
+  width: 100%;
+  min-height: 142px;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.tech-info-default {
+  color: var(--muted);
+  font-size: 0.96rem;
+  line-height: 1.78;
+  margin: 0;
+}
+
+.tech-info-head {
+  flex-wrap: wrap;
+}
+
+.tech-info-head i {
+  min-width: 40px;
+}
+
+.tech-info-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.tech-info-head i {
+  font-size: 1.4rem;
+  line-height: 1;
+  min-width: 38px;
+}
+
+.tech-info-head i:not(.colored) {
+  color: var(--text);
+}
+
+.tech-info-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+.tech-info-desc {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  margin: 0 0 14px;
+}
+
+.tech-info-used-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 8px;
+}
+
+.tech-info-projects {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tech-info-projects li {
+  position: relative;
+  padding-left: 14px;
+  font-size: 0.88rem;
+  color: var(--text);
+}
+
+.tech-info-projects li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.tech-info-fallback {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.dock-item {
+  position: relative;
+  flex: 0 0 auto;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 80px;
+  padding: 10px 8px 4px;
   background: none;
   border: none;
-  padding: 0;
   cursor: pointer;
-  transform-origin: bottom center; /* icons grow upward, feet stay put */
-  /* No CSS transition here on purpose: script.js already eases the
-     scale toward its target every frame (a "lerp"), which is what
-     makes the magnification track the mouse continuously. Adding a
-     CSS transition on top of that would double-smooth the motion
-     and make it feel laggy/rubber-banded. On touch devices (where
-     JS magnification is disabled) the mobile media query below adds
-     its own lightweight tap-feedback transition instead. */
+  transform-origin: bottom center;
   will-change: transform;
 }
 
 .dock-icon {
-  width: 100%;
-  height: 100%;
+  width: var(--dock-size);
+  height: var(--dock-size);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1369,9 +1572,21 @@ footer {
     height: 300px;
   }
 
-  .about-grid {
+  .about-intro {
+    max-width: 100%;
+    padding: 0 18px;
+  }
+
+  .tech-showcase {
+    padding: 22px;
+  }
+
+  .tech-showcase-grid {
     grid-template-columns: 1fr;
-    gap: 36px;
+  }
+
+  .tech-dock {
+    justify-content: center;
   }
 
   .nav-toggle { display: flex; }
