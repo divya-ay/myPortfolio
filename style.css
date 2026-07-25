@@ -96,7 +96,7 @@ h1, h2, h3, h4 {
 }
 
 /* ── NAV ─────────────────────────────────────── */
-.site-nav {
+nav {
   position: fixed;
   top: 0; left: 0; right: 0;
   height: var(--nav-h);
@@ -430,190 +430,112 @@ section:nth-child(even) {
 
 .about-intro {
   max-width: 760px;
-  margin: 0 auto;
-  padding: 32px 30px;
-  border-radius: 28px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.16);
-  box-shadow: 0 28px 72px rgba(0,0,0,0.22);
 }
 
 .about-text p {
   color: var(--muted);
-  margin-bottom: 18px;
-  font-size: 1.05rem;
-  line-height: 1.75;
+  margin-bottom: 16px;
+  font-size: 1.02rem;
 }
 
-.about-text p:last-child {
-  margin-bottom: 0;
+.side-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 14px;
 }
 
 /* ══════════════════════════════════════════════════════════════
-   SKILLS — dedicated section for the tech dock
-   - A self-sizing "shelf" pill, centered independently of section
-     width, with the hover/click detail panel stacked beneath it.
-   - fitDockSize() in script.js shrinks --dock-size to whatever
-     width the pill is actually given, so this scales cleanly from
-     desktop down to a single narrow mobile column with no
-     horizontal scrolling anywhere in between.
+   TECH STACK — macOS-style Dock
+   (replaces the old .skills pill list)
+
+   - The glass panel below is the "shelf". It sits inline in the
+     About section (not fixed to the viewport) so it stays part of
+     the page layout, but visually it floats via blur + shadow —
+     same glass language as the site's <nav>.
+   - Continuous magnification is computed in script.js on every
+     mousemove/rAF frame and applied via inline transform, NOT via
+     a CSS :hover transition — that's what makes it track the mouse
+     smoothly instead of snapping between two hover states.
+   - CSS below only supplies: layout, resting appearance, the
+     tooltip fade, the focus/tap state, and responsive fallbacks.
    ══════════════════════════════════════════════════════════════ */
 
-.skills-dock-wrap {
-  display: flex;
-  justify-content: center;
-  width: 100%;
+/* ══════════════════════════════════════════════════════════════
+   TECH DOCK — a single floating glass shelf, centered directly
+   below the About text so the two read as one cohesive section.
+   ══════════════════════════════════════════════════════════════ */
+
+.tech-showcase {
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+
+.tech-showcase .side-label {
+  text-align: center;
 }
 
 .tech-dock {
-  --dock-size: 46px;
+  --dock-size: 46px;      /* resting icon box size, set/read by JS too */
   display: flex;
-  align-items: center;
+  align-items: flex-end;   /* icons anchor to the bottom, like macOS */
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 14px;
-  min-width: 0;
-  width: fit-content;
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 20px 28px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.16);
-  box-shadow: 0 28px 72px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.08);
+  gap: 10px;
+  margin: 18px auto 0;
+  max-width: 720px;
+  min-width: 0;             /* let max-width win, not the dock's own content */
+  padding: 18px 22px 16px;
+  overflow-x: auto;
+  overflow-y: visible;
+  border-radius: 22px;
+  background: rgba(var(--accent-rgb), 0.06);
+  background-image: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0));
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid var(--border);
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.28),
+    0 2px 8px rgba(0,0,0,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+  transition: background 0.3s ease, border-color 0.3s ease;
+  scrollbar-width: none;
 }
 
-.tech-info-panel {
-  max-width: 560px;
-  margin: 28px auto 0;
-  padding: 28px 30px;
-  border-radius: 24px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.06);
-  box-shadow: 0 22px 42px rgba(0,0,0,0.12);
-  min-height: 120px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-}
+.tech-dock::-webkit-scrollbar { display: none; }
 
 .dock-item {
   position: relative;
   flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transform-origin: bottom center;
-  will-change: transform;
-}
-
-.dock-icon {
   width: var(--dock-size);
   height: var(--dock-size);
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transform-origin: bottom center; /* icons grow upward, feet stay put */
+  /* No CSS transition here on purpose: script.js already eases the
+     scale toward its target every frame (a "lerp"), which is what
+     makes the magnification track the mouse continuously. Adding a
+     CSS transition on top of that would double-smooth the motion
+     and make it feel laggy/rubber-banded. On touch devices (where
+     JS magnification is disabled) the mobile media query below adds
+     its own lightweight tap-feedback transition instead. */
+  will-change: transform;
+}
 
+.dock-icon {
   width: 100%;
-  min-height: 142px;
-  transition: opacity 0.18s ease, transform 0.18s ease;
-}
-
-.tech-info-default {
-  color: var(--muted);
-  font-size: 0.96rem;
-  line-height: 1.78;
-  margin: 0;
-}
-
-.tech-info-head {
-  flex-wrap: wrap;
-}
-
-.tech-info-head i {
-  min-width: 40px;
-}
-
-.tech-info-head {
+  height: 100%;
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 12px;
-  flex-wrap: wrap;
-}
-
-.tech-info-head i {
-  font-size: 1.4rem;
-  line-height: 1;
-  min-width: 38px;
-}
-
-.tech-info-head i:not(.colored) {
-  color: var(--text);
-}
-
-.tech-info-name {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text);
-  margin: 0;
-}
-
-.tech-info-desc {
-  color: var(--muted);
-  font-size: 0.88rem;
-  line-height: 1.6;
-  margin: 0 0 14px;
-}
-
-.tech-info-used-label {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin: 0 0 8px;
-}
-
-.tech-info-projects {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.tech-info-projects li {
-  position: relative;
-  padding-left: 14px;
-  font-size: 0.88rem;
-  color: var(--text);
-}
-
-.tech-info-projects li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.55em;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--accent);
-}
-
-.tech-info-fallback {
-  color: var(--muted);
-  font-size: 0.88rem;
-  line-height: 1.6;
-  margin: 0;
+  justify-content: center;
+  pointer-events: none; /* clicks/hover always resolve on .dock-item */
 }
 
 .dock-icon i {
@@ -684,8 +606,7 @@ section:nth-child(even) {
 
 /* Give scroll targets breathing room under the fixed nav bar */
 #projects,
-.project-card,
-#skills {
+.project-card {
   scroll-margin-top: calc(var(--nav-h) + 20px);
 }
 
@@ -693,23 +614,21 @@ section:nth-child(even) {
 @media (max-width: 860px) {
   .tech-dock {
     --dock-size: 40px;
-    gap: 10px;
-    padding: 16px 20px;
+    gap: 8px;
+    padding: 12px 14px 10px;
   }
 }
 
 /* ---------- Mobile: magnification disabled by script.js;
-   fall back to a calm, evenly-spaced, wrapping icon grid that
-   stays centered and never triggers horizontal scroll. ---------- */
+   fall back to a calm, evenly-spaced, wrapping icon grid. ---------- */
 @media (max-width: 640px) {
   .tech-dock {
-    --dock-size: 36px;
+    --dock-size: 38px;
     flex-wrap: wrap;
-    justify-content: center;
+    align-items: center;
     width: 100%;
-    gap: 12px 10px;
-    padding: 16px 14px;
-    border-radius: 28px;
+    gap: 14px 12px;
+    justify-content: flex-start;
   }
 
   /* No magnify on touch: transform is purely tap feedback. */
@@ -976,7 +895,12 @@ section:nth-child(even) {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-size: cover;
+  background-position: center;
 }
+
+/* Hides the letter mark automatically once a real cover image is applied */
+.poster-card.has-photo .poster-mark { display: none; }
 
 .poster-mark {
   font-family: var(--font-display);
@@ -1446,16 +1370,7 @@ footer {
   }
 
   .about-intro {
-    max-width: 100%;
-    padding: 26px 20px;
-  }
-
-  .skills-dock-wrap {
-    padding: 0 4px;
-  }
-
-  .tech-info-panel {
-    padding: 22px 20px;
+    max-width: none;
   }
 
   .nav-toggle { display: flex; }

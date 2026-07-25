@@ -19,11 +19,10 @@
 </head>
 <body>
 
-<nav class="site-nav">
+<nav>
   <a href="#home" class="nav-brand">Divya Shrestha</a>
   <div class="nav-links">
     <a href="#about"><span class="nav-index"></span>about</a>
-    <a href="#skills"><span class="nav-index"></span>skills</a>
     <a href="#projects"><span class="nav-index"></span>projects</a>
     <a href="#education"><span class="nav-index"></span>education</a>
     <a href="#certificates"><span class="nav-index"></span>certificates</a>
@@ -102,14 +101,20 @@
       </p>
     </div>
   </div>
-</section>
 
-<section id="skills" class="reveal skills-section">
-  <p class="section-label">skills</p>
-  <h2 class="section-title">Tools I've work with</h2>
+  <div class="tech-showcase">
+    <p class="side-label">Tech I've worked with</p>
 
-  <div class="skills-dock-wrap">
-    <nav class="tech-dock" id="techDock" aria-label="Tech stack. Hover, focus, or tap an icon to see where it's been used; click to jump to related work.">
+    <!--
+      TECH DOCK — macOS-style interactive shelf, sitting directly
+      below the About text so it reads as one cohesive section
+      instead of a separate floating element.
+      Same .dock-item buttons/data attributes as before. Hover shows
+      a tooltip with the tech name; click scrolls to and highlights
+      ALL matching projects (script.js), then fades after a few
+      seconds.
+    -->
+    <nav class="tech-dock" id="techDock" aria-label="Tech stack. Click an icon to jump to related work.">
       <button type="button" class="dock-item" data-tech="Python" data-match="Python">
         <span class="dock-icon"><i class="devicon-python-plain colored"></i></span>
         <span class="dock-tooltip" role="tooltip">Python</span>
@@ -142,7 +147,7 @@
 
       <button type="button" class="dock-item" data-tech="CSS3" data-match="CSS">
         <span class="dock-icon"><i class="devicon-css3-plain colored"></i></span>
-        <span class="dock-tooltip" role="tooltip">CSS</span>
+        <span class="dock-tooltip" role="tooltip">CSS3</span>
       </button>
 
       <button type="button" class="dock-item" data-tech="Django" data-match="Django">
@@ -165,13 +170,18 @@
         <span class="dock-tooltip" role="tooltip">Express</span>
       </button>
 
+      <button type="button" class="dock-item" data-tech="React Native" data-match="React Native">
+        <span class="dock-icon"><i class="devicon-react-original colored"></i></span>
+        <span class="dock-tooltip" role="tooltip">React Native</span>
+      </button>
+
       <button type="button" class="dock-item" data-tech="SQL / MySQL" data-match="MySQL,PostgreSQL,SQL">
         <span class="dock-icon"><i class="devicon-mysql-plain colored"></i></span>
         <span class="dock-tooltip" role="tooltip">SQL / MySQL</span>
       </button>
 
       <button type="button" class="dock-item" data-tech="Pandas" data-match="Pandas">
-        <span class="dock-icon"><i class="devicon-pandas-plain colored"></i></span>
+        <span class="dock-icon"><i class="devicon-pandas-original colored"></i></span>
         <span class="dock-tooltip" role="tooltip">Pandas</span>
       </button>
 
@@ -186,12 +196,6 @@
       </button>
     </nav>
   </div>
-
-  <aside class="tech-info-panel" id="techInfoPanel">
-    <div class="tech-info-body" id="techInfoBody">
-      <p class="tech-info-default">Hover, focus, or tap a technology to see where I’ve used it across projects.</p>
-    </div>
-  </aside>
 </section>
 
 <section id="projects" class="reveal">
@@ -243,8 +247,8 @@
       data-img=""
       data-title="QuizHub"
       data-type="Web App"
-      data-tags="React,Realtime,JavaScript,Python,Django"
-      data-desc="A multiplayer quiz platform inspired by Kahoot. This project is a bit special because I am trying to build a platform where me and my long distance cousin can play games/ quizzes together. Also, Players may join live rooms and compete on shared questions as scores update instantly."
+      data-tags="React,Realtime,JavaScript"
+      data-desc="A multiplayer quiz platform inspired by Kahoot, created to explore real-time interaction and user-driven content. Players join live rooms and compete on shared questions as scores update instantly."
       data-github="https://github.com/divya-ay/QuizHub.git">
       <span class="project-card-mark">QH</span>
       <div class="project-card-shade"></div>
@@ -428,6 +432,7 @@
       data-subtitle="Cisco Networking Academy · 2025/26"
       data-tags="Networking,CCNA"
       data-type="pdf"
+      data-img="certs/cert-1-networks.svg"
       data-src="certificates/itn.pdf">
       <div class="poster-art">
         <span class="poster-mark">N</span>
@@ -444,6 +449,7 @@
       data-subtitle="Cisco Networking Academy · 2025/26"
       data-tags="Security,CCNA"
       data-type="pdf"
+      data-img="certs/cert-2-cybersecurity.svg"
       data-src="certificates/Introduction_to_Cybersecurity_certificate.pdf">
       <div class="poster-art">
         <span class="poster-mark">CS</span>
@@ -460,6 +466,7 @@
       data-subtitle="Certificate of completion"
       data-tags="Data Analytics,Deloitte"
       data-type="pdf"
+      data-img="certs/cert-3-data-analytics.svg"
       data-src="certificates/DataAnalyticsJobSimulationDeloitte.pdf">
       <div class="poster-art">
         <span class="poster-mark">DA</span>
@@ -476,6 +483,7 @@
       data-subtitle="MathE Project Collaboration · 2025"
       data-tags="Collaboration,MathE"
       data-type="image"
+      data-img="certs/cert-4-mathe.svg"
       data-src="certificates/MathE.jpg">
       <div class="poster-art">
         <span class="poster-mark">ME</span>

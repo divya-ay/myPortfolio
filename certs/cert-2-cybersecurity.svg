@@ -1,0 +1,31 @@
+<svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="75%" y2="100%">
+      <stop offset="0%" stop-color="#4a2a1a"/>
+      <stop offset="60%" stop-color="#2a170d"/>
+      <stop offset="100%" stop-color="#150b07"/>
+    </linearGradient>
+    <radialGradient id="glow2" cx="50%" cy="38%" r="55%">
+      <stop offset="0%" stop-color="#ffb454" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#ffb454" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid2" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#ffffff" stroke-opacity="0.045" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="400" height="600" fill="url(#bg2)"/>
+  <rect width="400" height="600" fill="url(#grid2)"/>
+  <rect width="400" height="600" fill="url(#glow2)"/>
+
+  <!-- shield + lock motif -->
+  <path d="M200 150 L268 178 V270 C268 335 240 375 200 400 C160 375 132 335 132 270 V178 Z"
+        fill="none" stroke="#ffd39a" stroke-width="2.2" stroke-opacity="0.9"/>
+  <rect x="176" y="250" width="48" height="38" rx="6" fill="#ffd39a" opacity="0.92"/>
+  <path d="M186 250 V232 a14 14 0 0 1 28 0 V250" fill="none" stroke="#ffd39a" stroke-width="5" stroke-opacity="0.92"/>
+  <circle cx="200" cy="266" r="5" fill="#2a170d"/>
+  <rect x="197" y="266" width="6" height="12" fill="#2a170d"/>
+
+  <text x="200" y="470" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" letter-spacing="3" fill="#ffd39a" opacity="0.85">CCNA · CISCO</text>
+  <text x="200" y="500" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="22" font-weight="600" fill="#f4f1ea">Cybersecurity</text>
+</svg>

@@ -1,0 +1,41 @@
+<svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="75%" y2="100%">
+      <stop offset="0%" stop-color="#1a2a4a"/>
+      <stop offset="60%" stop-color="#0d172a"/>
+      <stop offset="100%" stop-color="#070b15"/>
+    </linearGradient>
+    <radialGradient id="glow3" cx="50%" cy="38%" r="55%">
+      <stop offset="0%" stop-color="#7fb2ff" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#7fb2ff" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid3" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#ffffff" stroke-opacity="0.045" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="400" height="600" fill="url(#bg3)"/>
+  <rect width="400" height="600" fill="url(#grid3)"/>
+  <rect width="400" height="600" fill="url(#glow3)"/>
+
+  <!-- ascending bar chart + trend line motif -->
+  <g fill="#bcd7ff" opacity="0.92">
+    <rect x="130" y="330" width="24" height="60"/>
+    <rect x="166" y="290" width="24" height="100"/>
+    <rect x="202" y="240" width="24" height="150"/>
+    <rect x="238" y="200" width="24" height="190"/>
+    <rect x="274" y="160" width="24" height="230"/>
+  </g>
+  <polyline points="142,325 178,282 214,232 250,192 286,150"
+            fill="none" stroke="#eaf3ff" stroke-width="2.4" stroke-opacity="0.9"/>
+  <g fill="#eaf3ff">
+    <circle cx="142" cy="325" r="4"/>
+    <circle cx="178" cy="282" r="4"/>
+    <circle cx="214" cy="232" r="4"/>
+    <circle cx="250" cy="192" r="4"/>
+    <circle cx="286" cy="150" r="4"/>
+  </g>
+
+  <text x="200" y="470" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" letter-spacing="3" fill="#bcd7ff" opacity="0.85">DELOITTE</text>
+  <text x="200" y="500" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="21" font-weight="600" fill="#f4f1ea">Data Analytics</text>
+</svg>

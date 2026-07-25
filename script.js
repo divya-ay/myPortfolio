@@ -64,6 +64,19 @@ document.querySelectorAll('.project-card').forEach(card => {
   }
 });
 
+/* ---------- Certificate poster covers ----------
+   Fill in data-img="certificates/covers/your-cover.svg" on any
+   .cert-card in index.html and it'll replace the gradient +
+   monogram placeholder automatically, same as project posters. */
+document.querySelectorAll('.cert-card').forEach(card => {
+  const img = card.dataset.img;
+  if (img && img.trim() !== '') {
+    const art = card.querySelector('.poster-art');
+    if (art) art.style.backgroundImage = `url('${img}')`;
+    card.classList.add('has-photo');
+  }
+});
+
 /* ---------- Certificate modal (poster-style, shows PDF/image) ---------- */
 const certModal = document.getElementById('certModal');
 const certModalClose = document.getElementById('certModalClose');
@@ -235,10 +248,24 @@ document.addEventListener('keydown', e => {
 });
 
 /* ============================================================
-   TECH STACK DOCK — simplified hover + click behavior
-   - Click a tech icon to scroll to the matching project.
-   - Tooltips still appear on hover/focus.
-   - The animated magnification behavior is disabled.
+   TECH STACK DOCK — macOS-style continuous magnification
+   ============================================================
+   How it works:
+   1. On mousemove over the dock, we record the mouse X position.
+   2. On every animation frame, each icon's TARGET scale is
+      calculated from its distance to the mouse (closer = bigger),
+      using a smooth cosine falloff curve.
+   3. Instead of jumping straight to that target (which would look
+      jittery), each icon's CURRENT scale eases toward the target a
+      little every frame (linear interpolation, "lerp"). That's what
+      makes the whole dock ripple smoothly as the mouse moves across
+      it, instead of icons popping between two hover states.
+   4. The animation loop keeps itself running only while something
+      is still moving, and stops itself once everything has settled
+      back to rest — so it isn't burning CPU when idle.
+   Magnification is disabled on touch devices / narrow screens; the
+   dock still works (tap to show tooltip + scroll), it just doesn't
+   magnify, per the mobile requirement.
    ============================================================ */
 (function initTechDock() {
   const dock = document.getElementById('techDock');
@@ -279,11 +306,12 @@ document.addEventListener('keydown', e => {
   const state = items.map(() => ({ scale: MIN_SCALE, target: MIN_SCALE }));
 
   function isDesktopPointer() {
+    // Real mouse + hover support + wide enough viewport = full dock behavior.
     const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     return hasFinePointer && window.innerWidth > 640;
   }
 
-  const DOCK_MAX_WIDTH = 720; // sensible cap so the pill doesn't stretch edge-to-edge on wide screens
+  const DOCK_MAX_WIDTH = 720; // must match .tech-dock's CSS max-width
 
   /* Shrink --dock-size just enough that all icons fit the dock's own
      capped width with no horizontal scrolling. Only runs on desktop —
@@ -295,8 +323,8 @@ document.addEventListener('keydown', e => {
       return;
     }
     const available = Math.min(dock.parentElement.clientWidth, DOCK_MAX_WIDTH);
-    const gap = 14;      // matches .tech-dock's gap
-    const paddingX = 56; // matches .tech-dock's left+right padding (28px * 2)
+    const gap = 10;
+    const paddingX = 44; // matches .tech-dock's left+right padding
     const raw = (available - paddingX - (items.length - 1) * gap) / items.length;
     const size = Math.max(30, Math.min(46, raw));
     dock.style.setProperty('--dock-size', size.toFixed(1) + 'px');
@@ -312,7 +340,7 @@ document.addEventListener('keydown', e => {
       const centerX = rect.left + rect.width / 2;
       const distance = Math.min(Math.abs(mouseX - centerX), INFLUENCE);
       const t = distance / INFLUENCE;                 // 0 = under cursor, 1 = out of range
-      const eased = (Math.cos(t * Math.PI) + 1) / 2;   // smooth cosine falloff curve
+      const eased = (Math.cos(t * Math.PI) + 1) / 2;   // smooth cosine falloff (macOS-style curve)
       state[i].target = MIN_SCALE + (MAX_SCALE - MIN_SCALE) * eased;
     });
   }
@@ -376,52 +404,18 @@ document.addEventListener('keydown', e => {
   window.addEventListener('resize', applyMode);
   applyMode();
 
-  /* ---------- Info panel: fills in with the hovered/focused tech's
-     name and the projects that use it (falls back to a plain note
-     for tools like Git or coursework-only languages with no matching
-     project card). Reverts to the default prompt on leave. ---------- */
-  const infoBody = document.getElementById('techInfoBody');
-  const DEFAULT_INFO_HTML = infoBody ? infoBody.innerHTML : '';
-
-  function renderInfo(item) {
-    if (!infoBody) return;
-    const iconHTML = item.querySelector('.dock-icon').innerHTML;
-    const name = item.dataset.tech || '';
-    const matches = getMatches(item);
-
-    let bodyHTML;
-    if (matches.length) {
-      const list = matches.map(c => `<li>${c.dataset.title}</li>`).join('');
-      bodyHTML = `
-        <p class="tech-info-used-label">Used in</p>
-        <ul class="tech-info-projects">${list}</ul>`;
-    } else if (item.dataset.link) {
-      bodyHTML = `<p class="tech-info-fallback">Used for version control across every project here — click the icon to open GitHub.</p>`;
-    } else {
-      bodyHTML = `<p class="tech-info-fallback">Learned through coursework — not yet featured in a project below.</p>`;
-    }
-
-    infoBody.innerHTML = `
-      <div class="tech-info-head">${iconHTML}<p class="tech-info-name">${name}</p></div>
-      ${bodyHTML}`;
-  }
-
-  function resetInfo() {
-    if (infoBody) infoBody.innerHTML = DEFAULT_INFO_HTML;
-  }
-
   /* ---------- Tooltip: fades in above whichever icon is hovered/focused ---------- */
   items.forEach(item => {
-    const show = () => { item.classList.add('tooltip-visible'); renderInfo(item); };
-    const hide = () => { item.classList.remove('tooltip-visible'); resetInfo(); };
+    const show = () => item.classList.add('tooltip-visible');
+    const hide = () => item.classList.remove('tooltip-visible');
     item.addEventListener('mouseenter', show);
     item.addEventListener('mouseleave', hide);
     item.addEventListener('focus', show);
     item.addEventListener('blur', hide);
-    // Touch devices: a tap shows the tooltip + info briefly without blocking the click.
+    // Touch devices: a tap shows the tooltip briefly without blocking the click.
     item.addEventListener('touchstart', () => {
       show();
-      setTimeout(hide, 1600);
+      setTimeout(hide, 900);
     }, { passive: true });
   });
 
