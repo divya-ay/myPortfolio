@@ -283,7 +283,7 @@ document.addEventListener('keydown', e => {
     return hasFinePointer && window.innerWidth > 640;
   }
 
-  const DOCK_MAX_WIDTH = 720; // must match .tech-dock's CSS max-width
+  const DOCK_MAX_WIDTH = 720; // sensible cap so the pill doesn't stretch edge-to-edge on wide screens
 
   /* Shrink --dock-size just enough that all icons fit the dock's own
      capped width with no horizontal scrolling. Only runs on desktop —
@@ -295,8 +295,8 @@ document.addEventListener('keydown', e => {
       return;
     }
     const available = Math.min(dock.parentElement.clientWidth, DOCK_MAX_WIDTH);
-    const gap = 10;
-    const paddingX = 44; // matches .tech-dock's left+right padding
+    const gap = 14;      // matches .tech-dock's gap
+    const paddingX = 56; // matches .tech-dock's left+right padding (28px * 2)
     const raw = (available - paddingX - (items.length - 1) * gap) / items.length;
     const size = Math.max(30, Math.min(46, raw));
     dock.style.setProperty('--dock-size', size.toFixed(1) + 'px');
@@ -376,18 +376,52 @@ document.addEventListener('keydown', e => {
   window.addEventListener('resize', applyMode);
   applyMode();
 
+  /* ---------- Info panel: fills in with the hovered/focused tech's
+     name and the projects that use it (falls back to a plain note
+     for tools like Git or coursework-only languages with no matching
+     project card). Reverts to the default prompt on leave. ---------- */
+  const infoBody = document.getElementById('techInfoBody');
+  const DEFAULT_INFO_HTML = infoBody ? infoBody.innerHTML : '';
+
+  function renderInfo(item) {
+    if (!infoBody) return;
+    const iconHTML = item.querySelector('.dock-icon').innerHTML;
+    const name = item.dataset.tech || '';
+    const matches = getMatches(item);
+
+    let bodyHTML;
+    if (matches.length) {
+      const list = matches.map(c => `<li>${c.dataset.title}</li>`).join('');
+      bodyHTML = `
+        <p class="tech-info-used-label">Used in</p>
+        <ul class="tech-info-projects">${list}</ul>`;
+    } else if (item.dataset.link) {
+      bodyHTML = `<p class="tech-info-fallback">Used for version control across every project here — click the icon to open GitHub.</p>`;
+    } else {
+      bodyHTML = `<p class="tech-info-fallback">Learned through coursework — not yet featured in a project below.</p>`;
+    }
+
+    infoBody.innerHTML = `
+      <div class="tech-info-head">${iconHTML}<p class="tech-info-name">${name}</p></div>
+      ${bodyHTML}`;
+  }
+
+  function resetInfo() {
+    if (infoBody) infoBody.innerHTML = DEFAULT_INFO_HTML;
+  }
+
   /* ---------- Tooltip: fades in above whichever icon is hovered/focused ---------- */
   items.forEach(item => {
-    const show = () => item.classList.add('tooltip-visible');
-    const hide = () => item.classList.remove('tooltip-visible');
+    const show = () => { item.classList.add('tooltip-visible'); renderInfo(item); };
+    const hide = () => { item.classList.remove('tooltip-visible'); resetInfo(); };
     item.addEventListener('mouseenter', show);
     item.addEventListener('mouseleave', hide);
     item.addEventListener('focus', show);
     item.addEventListener('blur', hide);
-    // Touch devices: a tap shows the tooltip briefly without blocking the click.
+    // Touch devices: a tap shows the tooltip + info briefly without blocking the click.
     item.addEventListener('touchstart', () => {
       show();
-      setTimeout(hide, 900);
+      setTimeout(hide, 1600);
     }, { passive: true });
   });
 
