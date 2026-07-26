@@ -326,7 +326,7 @@ document.addEventListener('keydown', e => {
     const gap = 10;
     const paddingX = 44; // matches .tech-dock's left+right padding
     const raw = (available - paddingX - (items.length - 1) * gap) / items.length;
-    const size = Math.max(30, Math.min(46, raw));
+    const size = Math.max(24, Math.min(46, raw));
     dock.style.setProperty('--dock-size', size.toFixed(1) + 'px');
   }
 
@@ -405,17 +405,63 @@ document.addEventListener('keydown', e => {
   applyMode();
 
   /* ---------- Tooltip: fades in above whichever icon is hovered/focused ---------- */
+  const infoBody = document.getElementById('techInfoBody');
+  const infoDefaultHTML = infoBody ? infoBody.innerHTML : '';
+  let activeInfoItem = null;
+
+  function renderTechInfo(item) {
+    if (!infoBody) return;
+
+    const name = item.dataset.tech || '';
+    const iconHTML = item.querySelector('.dock-icon i')?.outerHTML || '';
+    const matches = getMatches(item);
+
+    let listHTML;
+    if (item.dataset.link) {
+      listHTML = `<span class="tech-info-empty">Version control for every project — see it on GitHub.</span>`;
+    } else if (matches.length) {
+      listHTML = `<ul class="tech-info-projects">${matches
+        .map(card => `<li>${card.dataset.title || ''}</li>`)
+        .join('')}</ul>`;
+    } else {
+      listHTML = `<span class="tech-info-empty">Not tied to a specific project yet.</span>`;
+    }
+
+    infoBody.innerHTML = `
+      <div class="tech-info-active">
+        <span class="tech-info-name">${iconHTML} ${name}</span>
+        ${listHTML}
+      </div>`;
+  }
+
+  function resetTechInfo(item) {
+    if (!infoBody) return;
+    // Only reset if nothing else has taken over as the active item
+    // (avoids flicker when the mouse moves directly between icons).
+    if (activeInfoItem === item) {
+      activeInfoItem = null;
+      infoBody.innerHTML = infoDefaultHTML;
+    }
+  }
+
   items.forEach(item => {
-    const show = () => item.classList.add('tooltip-visible');
-    const hide = () => item.classList.remove('tooltip-visible');
+    const show = () => {
+      item.classList.add('tooltip-visible');
+      activeInfoItem = item;
+      renderTechInfo(item);
+    };
+    const hide = () => {
+      item.classList.remove('tooltip-visible');
+      resetTechInfo(item);
+    };
     item.addEventListener('mouseenter', show);
     item.addEventListener('mouseleave', hide);
     item.addEventListener('focus', show);
     item.addEventListener('blur', hide);
-    // Touch devices: a tap shows the tooltip briefly without blocking the click.
+    // Touch devices: a tap shows the tooltip + info panel briefly without blocking the click.
     item.addEventListener('touchstart', () => {
       show();
-      setTimeout(hide, 900);
+      setTimeout(hide, 2200);
     }, { passive: true });
   });
 
