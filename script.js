@@ -31,30 +31,8 @@ links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
    Fill in data-img="images/your-screenshot.jpg" on any .project-card
    in index.html and it'll replace the gradient placeholder automatically. */
 
-const techIcons = {
-  "Python": "devicon-python-plain colored",
-  "Java": "devicon-java-plain colored",
-  "JavaScript": "devicon-javascript-plain colored",
-  "TypeScript": "devicon-typescript-plain colored",
-  "HTML": "devicon-html5-plain colored",
-  "CSS": "devicon-css3-plain colored",
-  "Django": "devicon-django-plain colored",
-  "React": "devicon-react-original colored",
-  "React Native": "devicon-react-original colored",
-  "Node.js": "devicon-nodejs-plain colored",
-  "Express": "devicon-express-original",
-  "PostgreSQL": "devicon-postgresql-plain colored",
-  "MySQL": "devicon-mysql-plain colored",
-  "Docker": "devicon-docker-plain colored",
-  "Git": "devicon-git-plain colored",
-  "GitHub": "devicon-github-original",
-  "Pandas": "devicon-pandas-original colored",
-  "NumPy": "devicon-numpy-original colored",
-  "Scikit-Learn": "devicon-scikitlearn-plain colored",
-  "Jupyter": "devicon-jupyter-plain colored",
-  "Matplotlib": "devicon-matplotlib-plain colored",
-  "Figma": "devicon-figma-plain colored"
-};
+/* Sourced from js/data/tech-icons.js, loaded before this file. */
+const techIcons = window.TECH_ICONS;
 
 document.querySelectorAll('.project-card').forEach(card => {
   const img = card.dataset.img;
